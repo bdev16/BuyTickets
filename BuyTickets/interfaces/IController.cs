@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BuyTickets.interfaces
 {
-    public interface IController
+    public interface IController<T>
     {
-        public void Create();
-        public void SearchAll();
-        public void Update();
-        public void Delete();
-        public void SearchById();
+        void Create(T value);
+        List<T> SearchAll();
+        void Update(T value);
+        void Delete(Guid value);
+        T SearchById(Guid value);
     }
 }
