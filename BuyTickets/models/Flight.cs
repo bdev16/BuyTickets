@@ -18,7 +18,8 @@ namespace BuyTickets.models
         public DateTime DepartureTime { get { return departureTime; } set { departureTime = value; } }
         private DateTime arrivalTime;
         public DateTime ArrivalTime  { get { return arrivalTime; } set { arrivalTime = value; } }
-        public Enterprise Enterprise{ get; private set; }
+        private Enterprise enterprise;
+        public Enterprise Enterprise{ get { return enterprise; } set { enterprise = value; } }
 
         public Flight(string origin, string destiny, DateTime date, DateTime departureTime, DateTime arrivalTime, Enterprise enterprise)
         {
