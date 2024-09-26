@@ -95,5 +95,29 @@ namespace BuyTicketsTest
             Assert.NotEqual(flightResultAfterUpdate.Destiny, flightCopy.Destiny);   
             Assert.Equal(flightResultAfterUpdate.Id, flight.Id);
         }
+
+        [Fact]
+        public void Check_MethodDelete_RemoveInformedFlightFromFlightList()
+        {
+            //Arrange
+
+            FlightController flightController = new FlightController();
+            Enterprise enterprise = new Enterprise("LATAM");
+            Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
+
+            //Act
+
+            flightController.Create(flight);
+
+            var flightResult = flightController.SearchById(flight.Id);
+
+            flightController.Delete(flightResult.Id);
+
+            var flightResultList = flightController.SearchAll();
+
+            //Assert
+
+            Assert.Empty(flightResultList);
+        }
     }
 }
