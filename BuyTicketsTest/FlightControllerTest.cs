@@ -29,5 +29,25 @@ namespace BuyTicketsTest
 
             Assert.Equal(flight, flightResult);
         }
+
+        [Fact]
+        public void Check_SearchAllMethod_ReturnsAFlightList()
+        {
+            //Arrange
+
+            FlightController flightController = new FlightController();
+            Enterprise enterprise = new Enterprise("LATAM");
+            Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
+
+            //Act
+
+            flightController.Create(flight);
+
+            var flightResult = flightController.SearchAll();
+            
+            //Assert
+
+            Assert.NotEmpty(flightResult);
+        }
     }
 }
