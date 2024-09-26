@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Xunit;
 using BuyTickets.models;
 using BuyTickets.Controllers;
+using System.Data.Common;
 
 namespace BuyTicketsTest
 {
@@ -48,6 +49,51 @@ namespace BuyTicketsTest
             //Assert
 
             Assert.NotEmpty(flightResult);
+        }
+
+        [Fact] 
+        public void Check_MethodSearchById_ReturnTheFlightInformed()
+        {
+            //Arrange
+
+                FlightController flightController = new FlightController();
+                Enterprise enterprise = new Enterprise("LATAM");
+                Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise); 
+
+            //Act
+
+                flightController.Create(flight);
+
+                var flightResult = flightController.SearchById(flight.Id);
+
+            //Assert
+
+                Assert.Equal(flightResult, flight);
+        }
+
+        [Fact]
+        public void Check_MethodUpdate_ModifieTheFlightRegisteredByTheFlightInformed()
+        {
+            //Arrange
+
+            FlightController flightController = new FlightController();
+            Enterprise enterprise = new Enterprise("LATAM");
+            Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
+            Flight flightCopy = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
+
+            //Act
+
+            flightController.Create(flight);
+
+            flight.Destiny = "RIO DE JANEIRO";
+
+            flightController.Update(flight);
+
+            var flightResultAfterUpdate = flightController.SearchById(flight.Id);
+
+            //Assert
+            Assert.NotEqual(flightResultAfterUpdate.Destiny, flightCopy.Destiny);   
+            Assert.Equal(flightResultAfterUpdate.Id, flight.Id);
         }
     }
 }
