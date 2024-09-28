@@ -19,10 +19,7 @@ namespace BuyTickets.models
         private DateTime arrivalTime;
         public DateTime ArrivalTime  { get { return arrivalTime; } set { arrivalTime = value; } }
         private Enterprise enterprise;
-        private string v;
-
         public Enterprise Enterprise{ get { return enterprise; } set { enterprise = value; } }
-
         public Flight(string origin, string destiny, string date, string departureTime, string arrivalTime, Enterprise enterprise)
         {
             Id = Guid.NewGuid();
@@ -32,11 +29,6 @@ namespace BuyTickets.models
             DepartureTime = DateTime.Parse(departureTime);
             ArrivalTime = DateTime.Parse(arrivalTime);
             Enterprise = enterprise;
-        }
-
-        public Flight(string v)
-        {
-            this.v = v;
         }
     }
 }
