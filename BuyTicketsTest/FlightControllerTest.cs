@@ -117,7 +117,7 @@ namespace BuyTicketsTest
 
             //Assert
 
-            Assert.Empty(flightResultList);
+            Assert.Null(flightResultList);
         }
     }
 }
