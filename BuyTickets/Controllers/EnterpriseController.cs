@@ -18,15 +18,15 @@ namespace BuyTickets.Controllers
         /// Will add enterprise in the enterprise list.
         /// </summary>
         /// <param name="enterprise">Will receive a Enterprise class Object</param>
-        public void Create(Enterprise enterprise)
+        public Enterprise Create(Enterprise enterprise)
         {
-             if (enterprise == null)
+            if (enterprise == null)
             {
-                Console.WriteLine("Ocorreu ao tentar cadastrar a Empresa...");
+                return null;
             }
 
             _enterprises.Add(enterprise);
-            Console.WriteLine($"Empresa {enterprise.Id} criada com sucesso!!!");
+            return enterprise;
         }
 
         /// <summary>
@@ -35,6 +35,10 @@ namespace BuyTickets.Controllers
         /// <returns>Will return the enterprise list.</returns>
         public List<Enterprise> SearchAll()
         {
+            if (_enterprises.Count == 0)
+            {
+                return null;
+            }
             return _enterprises;
         }
 
@@ -60,16 +64,17 @@ namespace BuyTickets.Controllers
         /// It will modify the attributes of a Enterprise already present in the Enterprise List.
         /// </summary>
         /// <param name="enterpriseUpdate">Will receive a Enterprise class Object.</param>
-        public void Update(Enterprise enterpriseUpdate)
+        public Enterprise Update(Enterprise enterpriseUpdate)
         {
             var enterprise = _enterprises.FirstOrDefault(e => e.Id == enterpriseUpdate.Id);
             if (enterprise != null)
             {
                 enterprise.Name = enterpriseUpdate.Name;
+                return enterprise;
             }
             else
             {
-                Console.WriteLine("O Codigo informado não corresponde a nenhuma das Empresas cadastradas no sistema...");
+                return null;
             }
         }
 
@@ -77,16 +82,17 @@ namespace BuyTickets.Controllers
         /// This method will remove the Enterprise class for the enterprise list. 
         /// </summary>
         /// <param name="idEnterprise">Will receive a Guid class which will represent the Enterprise ID attribute.</param>
-        public void Delete(Guid idEnterprise)
+        public bool Delete(Guid idEnterprise)
         {
             var resultSearchById = _enterprises.FirstOrDefault(e => e.Id == idEnterprise);
             if (resultSearchById != null)
             {
                 _enterprises.Remove(resultSearchById);
+                return true;
             }
             else
             {
-                Console.WriteLine("O Codigo informado não corresponde a nenhuma das empresas cadastradas no sistema...");
+                return false;
             }
         }
     }
