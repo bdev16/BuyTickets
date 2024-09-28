@@ -8,10 +8,10 @@ namespace BuyTickets.interfaces
 {
     public interface IController<T>
     {
-        void Create(T value);
+        T Create(T value);
         List<T> SearchAll();
-        void Update(T value);
-        void Delete(Guid value);
+        T Update(T value);
+        bool Delete(Guid value);
         T SearchById(Guid value);
     }
 }
