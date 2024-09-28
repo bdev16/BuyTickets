@@ -20,14 +20,14 @@ namespace BuyTickets.Controllers
         /// Will add flight in the flight list.
         /// </summary>
         /// <param name="flight">Will receive a Flight class Object</param>
-        public void Create(Flight flight)
+        public Flight Create(Flight flight)
         {
             if (flight == null)
             {
-                Console.WriteLine("Ocorreu ao tentar criar o voo...");
+                return null;
             }
             _flights.Add(flight);
-            Console.WriteLine($"Voo {flight.Id} criado com sucesso!!!");
+            return flight;
         }
 
         /// <summary>
@@ -36,6 +36,11 @@ namespace BuyTickets.Controllers
         /// <returns>Will return the flight list.</returns>
         public List<Flight> SearchAll()
         {
+            if (_flights.Count == 0)
+            {
+                return null;
+            }
+            
             return _flights;
         }
 
@@ -61,40 +66,38 @@ namespace BuyTickets.Controllers
         /// It will modify the attributes of a Flight already present in the Flight List.
         /// </summary>
         /// <param name="flightUpdate">Will receive a Flight class Object.</param>
-        public void Update(Flight flightUpdate)
+        public Flight Update(Flight flightUpdate)
         {
 
             var flight = _flights.FirstOrDefault(f => f.Id == flightUpdate.Id);
-            if (flight != null)
+            if (flight == null)
             {
-                flight.Origin = flightUpdate.Origin;
-                flight.Destiny = flightUpdate.Destiny;
-                flight.Date = flightUpdate.Date;
-                flight.DepartureTime = flightUpdate.DepartureTime;
-                flight.ArrivalTime = flightUpdate.ArrivalTime;
-                flight.Enterprise = flightUpdate.Enterprise;
+                return null;
             }
-            else
-            {
-                Console.WriteLine("O Codigo informado não corresponde a nenhum dos Voos cadastrados no sistema...");
-            }
+            
+            flight.Origin = flightUpdate.Origin;
+            flight.Destiny = flightUpdate.Destiny;
+            flight.Date = flightUpdate.Date;
+            flight.DepartureTime = flightUpdate.DepartureTime;
+            flight.ArrivalTime = flightUpdate.ArrivalTime;
+            flight.Enterprise = flightUpdate.Enterprise;
+            return flight;
         }
 
         /// <summary>
         /// This method will remove the Flight class for the flight list. 
         /// </summary>
         /// <param name="idFlight">Will receive a Guid class which will represent the Flight ID attribute.</param>
-        public void Delete(Guid idFlight)
+        public bool Delete(Guid idFlight)
         {
             var resultSearchById = _flights.FirstOrDefault(f => f.Id == idFlight);
-            if (resultSearchById != null)
+            if (resultSearchById == null)
             {
-                _flights.Remove(resultSearchById);
+                return false;
             }
-            else
-            {
-                Console.WriteLine("O Codigo informado não corresponde a nenhum dos Voos cadastrados no sistema...");
-            }
-        }
+
+            _flights.Remove(resultSearchById);
+            return true;
+        }  
     }
 }
