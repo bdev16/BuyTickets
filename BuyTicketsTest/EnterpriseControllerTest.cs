@@ -93,5 +93,28 @@ namespace BuyTicketsTest
             Assert.NotEqual(enterpriseResultAfterUpdate.Name, enterpriseCopy.Name);
             Assert.Equal(enterpriseResultAfterUpdate.Id, enterprise.Id);
         }
+
+        [Fact]
+        public void Check_MethodDelete_RemoveInformedEnterpriseFromEnterpriseList()
+        {
+            //Arrange
+
+            EnterpriseController enterpriseController = new EnterpriseController();
+            Enterprise enterprise = new Enterprise("LATAM");
+
+            //Act
+
+            enterpriseController.Create(enterprise);
+
+            var enterpriseResult = enterpriseController.SearchById(enterprise.Id);
+
+            enterpriseController.Delete(enterpriseResult.Id);
+
+            var enterpriseResultList = enterpriseController.SearchAll();
+
+            //Assert
+
+            Assert.Empty(enterpriseResultList);
+        }
     }
 }
