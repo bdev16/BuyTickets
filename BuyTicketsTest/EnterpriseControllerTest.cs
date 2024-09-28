@@ -47,5 +47,26 @@ namespace BuyTicketsTest
 
             Assert.NotEmpty(enterpriseListResult);
         }
+
+        [Fact]
+        public void Check_MethodSearchById_ReturnTheEnterpriseInformed()
+        {
+            //Arrange
+
+            EnterpriseController enterpriseController = new EnterpriseController();
+            Enterprise enterprise = new Enterprise("LATAM");
+            Enterprise enterprise1 = new Enterprise("GOL");
+
+            //Act
+
+            enterpriseController.Create(enterprise);
+            enterpriseController.Create(enterprise1);
+
+            var enterpriseResult = enterpriseController.SearchById(enterprise.Id);
+
+            //Assert
+
+            Assert.Equal(enterpriseResult, enterprise);
+        }
     }
 }
