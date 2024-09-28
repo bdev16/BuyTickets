@@ -10,10 +10,13 @@ namespace BuyTickets.Controllers
     /// <summary>
     /// This class represents the business logic of the Enterprise class, containing the methods to Create, Update, List and remove a class from a Enterprise List
     /// </summary>
-    public class EnterpriseController : IController<Enterprise>
+    public class EnterpriseController : IController<Enterprise>, IAuthentication<Enterprise>
     {
-        private List<Enterprise> _enterprises = new List<Enterprise>();
-
+        private List<Enterprise> _enterprises;
+        public EnterpriseController(List<Enterprise> enterprises)
+        {
+            _enterprises = enterprises;
+        }
         /// <summary>
         /// Will add enterprise in the enterprise list.
         /// </summary>
@@ -94,6 +97,17 @@ namespace BuyTickets.Controllers
             {
                 return false;
             }
+        }
+
+        public Enterprise Login(string emailEnterprise, string passwordEnterprise)
+        {
+            var resultSearchByEmailAndPassword = _enterprises.FirstOrDefault(e => e.Email == emailEnterprise && e.Password == passwordEnterprise);
+            if (resultSearchByEmailAndPassword == null)
+            {
+                return null;
+            }
+
+            return resultSearchByEmailAndPassword;
         }
     }
 }
