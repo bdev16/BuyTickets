@@ -68,5 +68,30 @@ namespace BuyTicketsTest
 
             Assert.Equal(enterpriseResult, enterprise);
         }
+
+        [Fact]
+        public void Check_MethodUpdate_ModifieTheFlightRegisteredByTheFlightInformed()
+        {
+            //Arrange
+
+            EnterpriseController enterpriseController = new EnterpriseController();
+            Enterprise enterprise = new Enterprise("LATAM");
+            Enterprise enterpriseCopy = new Enterprise("LATAM");
+
+            //Act
+
+            enterpriseController.Create(enterprise);
+
+            enterprise.Name = "LATAM AIRLINES";
+
+            enterpriseController.Update(enterprise);
+
+            var enterpriseResultAfterUpdate = enterpriseController.SearchById(enterprise.Id);
+
+            //Assert
+
+            Assert.NotEqual(enterpriseResultAfterUpdate.Name, enterpriseCopy.Name);
+            Assert.Equal(enterpriseResultAfterUpdate.Id, enterprise.Id);
+        }
     }
 }
