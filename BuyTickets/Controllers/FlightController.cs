@@ -15,6 +15,10 @@ namespace BuyTickets.Controllers
     public class FlightController : IController<Flight>
     {
         private List<Flight> _flights = new List<Flight>();
+        public FlightController(List<Flight> flights)
+        {
+            _flights = flights;
+        }
 
         /// <summary>
         /// Will add flight in the flight list.
@@ -98,6 +102,6 @@ namespace BuyTickets.Controllers
 
             _flights.Remove(resultSearchById);
             return true;
-        }  
+        }
     }
 }
