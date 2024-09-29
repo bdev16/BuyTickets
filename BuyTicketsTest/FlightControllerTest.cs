@@ -16,8 +16,9 @@ namespace BuyTicketsTest
         {
             //Arrange
             
-            FlightController flightController = new FlightController();
-            Enterprise enterprise = new Enterprise("LATAM");
+            List<Flight> flights = new List<Flight>();
+            FlightController flightController = new FlightController(flights);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
             Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
 
             //Act
@@ -36,8 +37,9 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            FlightController flightController = new FlightController();
-            Enterprise enterprise = new Enterprise("LATAM");
+            List<Flight> flights = new List<Flight>();
+            FlightController flightController = new FlightController(flights);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
             Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
 
             //Act
@@ -56,8 +58,9 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-                FlightController flightController = new FlightController();
-                Enterprise enterprise = new Enterprise("LATAM");
+                List<Flight> flights = new List<Flight>();
+                FlightController flightController = new FlightController(flights);
+                Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
                 Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise); 
 
             //Act
@@ -76,8 +79,9 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            FlightController flightController = new FlightController();
-            Enterprise enterprise = new Enterprise("LATAM");
+            List<Flight> flights = new List<Flight>();
+            FlightController flightController = new FlightController(flights);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
             Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
             Flight flightCopy = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
 
@@ -100,9 +104,9 @@ namespace BuyTicketsTest
         public void Check_MethodDelete_RemoveInformedFlightFromFlightList()
         {
             //Arrange
-
-            FlightController flightController = new FlightController();
-            Enterprise enterprise = new Enterprise("LATAM");
+            List<Flight> flights = new List<Flight>();
+            FlightController flightController = new FlightController(flights);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
             Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
 
             //Act
