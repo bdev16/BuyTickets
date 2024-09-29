@@ -15,8 +15,9 @@ namespace BuyTicketsTest
         {
             //Arrange
             
-            EnterpriseController enterpriseController = new EnterpriseController();
-            Enterprise enterprise = new Enterprise("LATAM");
+            List<Enterprise> enterprises = new List<Enterprise>();
+            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
 
             //Act
 
@@ -34,8 +35,9 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            EnterpriseController enterpriseController = new EnterpriseController();
-            Enterprise enterprise = new Enterprise("LATAM");
+            List<Enterprise> enterprises = new List<Enterprise>();
+            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
 
             //Act
 
@@ -53,9 +55,10 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            EnterpriseController enterpriseController = new EnterpriseController();
-            Enterprise enterprise = new Enterprise("LATAM");
-            Enterprise enterprise1 = new Enterprise("GOL");
+            List<Enterprise> enterprises = new List<Enterprise>();
+            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterprise1 = new Enterprise("GOL", "golairlines@gmail.com", "gol123");
 
             //Act
 
@@ -74,9 +77,10 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            EnterpriseController enterpriseController = new EnterpriseController();
-            Enterprise enterprise = new Enterprise("LATAM");
-            Enterprise enterpriseCopy = new Enterprise("LATAM");
+            List<Enterprise> enterprises = new List<Enterprise>();
+            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterpriseCopy = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
 
             //Act
 
@@ -99,8 +103,10 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            EnterpriseController enterpriseController = new EnterpriseController();
-            Enterprise enterprise = new Enterprise("LATAM");
+            List<Enterprise> enterprises = new List<Enterprise>();
+            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+
 
             //Act
 
