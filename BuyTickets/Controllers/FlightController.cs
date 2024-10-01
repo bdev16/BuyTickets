@@ -52,7 +52,7 @@ namespace BuyTickets.Controllers
         /// You will search for a flight in the flight list using your Id attribute.
         /// </summary>
         /// <param name="idFlight">Will receive a Guid class which will represent the Flight ID attribute.</param>
-        /// <returns>Will returning the found class</returns>
+        /// <returns>Will return a list of flights that will have the same enterprise object.</returns>
         public Flight SearchById(Guid idFlight)
         {
             var resultSearchById = _flights.FirstOrDefault(f => f.Id == idFlight);
@@ -63,6 +63,26 @@ namespace BuyTickets.Controllers
             else
             {
                 return resultSearchById;
+            }
+        }
+
+        /// <summary>
+        /// You will seach for a flight in the flight list using a enterprise object informad.
+        /// </summary>
+        /// <param name="enterprise">Will receive a Enterprise object which will represent the Enterprise class.</param>
+        /// <returns>Will returning the list  class</returns>
+        public IEnumerable<Flight> SearchByEnterprise(Enterprise enterprise)
+        {
+            var flightForEnterprise = from f in _flights
+                                      where f.Enterprise == enterprise
+                                      select f;
+            if (flightForEnterprise == null)
+            {
+                return null;
+            }
+            else
+            {
+                return flightForEnterprise;
             }
         }
 
