@@ -75,6 +75,31 @@ namespace BuyTicketsTest
         }
 
         [Fact]
+        public void Check_MethodSearchByEnterprise_ReturnTheFlightListToEnterpriseInformed()
+        {
+            // Given
+
+            List<Flight> flights = new List<Flight>();
+            FlightController flightController = new FlightController(flights);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise); 
+            Flight flight2 = new Flight("RECIFE", "SAO PAULO", "10/10/2024", "09:00", "11:00", enterprise); 
+            Flight flight3 = new Flight("RECIFE", "RIO DE JANEIRO", "10/10/2024", "09:00", "11:00", enterprise); 
+
+            // When
+
+            flightController.Create(flight);
+            flightController.Create(flight2);
+            flightController.Create(flight3);
+
+            var resultFlightToEnterprise = flightController.SearchByEnterprise(enterprise);
+        
+            // Then
+
+             Assert.NotEmpty(resultFlightToEnterprise);
+        }
+
+        [Fact]
         public void Check_MethodUpdate_ModifieTheFlightRegisteredByTheFlightInformed()
         {
             //Arrange
