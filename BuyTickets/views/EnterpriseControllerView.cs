@@ -10,13 +10,10 @@ namespace BuyTickets.views
     public class EnterpriseControllerView
     {
         private EnterpriseController _enterpriseController;
-        private MenuView _menuView;
 
-        public EnterpriseControllerView(EnterpriseController enterpriseController, MenuView menuView)
-        {
-            
+        public EnterpriseControllerView(EnterpriseController enterpriseController)
+        { 
             _enterpriseController = enterpriseController;
-            _menuView = menuView;
         }
 
         public void Create()
@@ -80,7 +77,7 @@ namespace BuyTickets.views
             }     
         }
 
-        public void Login()
+        public void Login(MenuView menuView)
         {
             Console.WriteLine("Informe o email: ");
             var email = Console.ReadLine();
@@ -94,7 +91,7 @@ namespace BuyTickets.views
             }
             else
             {
-                _menuView.EnterpriseMenu(loginResult);
+                menuView.EnterpriseMenu(loginResult);
             }
         }
     }
