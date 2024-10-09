@@ -38,6 +38,23 @@ namespace BuyTickets.views
             }
         }
 
+        public void SearchAll()
+        {
+            var enterpriseListResult = _enterpriseController.SearchAll();
+
+            if (enterpriseListResult == null)
+            {
+                Console.WriteLine("Nenhuma empresa foi cadastrada até o momento...");
+            }
+            else
+            {
+                foreach (var enterprise in enterpriseListResult)
+                {
+                    Console.WriteLine($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.Name};\n");
+                }
+            }
+        }
+
         public void SearchById(Enterprise enterprise)
         {
             var enterpriseResult = _enterpriseController.SearchById(enterprise.Id);
