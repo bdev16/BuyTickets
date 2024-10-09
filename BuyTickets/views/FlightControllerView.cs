@@ -43,6 +43,19 @@ namespace BuyTickets.views
             }
         }
 
+        public void SearchAll()
+        {
+            var flightListResult = _flightController.SearchAll();
+
+            foreach (var flight in flightListResult)
+            {
+                Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.Name};" +
+                                    $"Origem: {flight.Origin}; Destino: {flight.Destiny}" +
+                                    $"\nData: {flight.Date}; Saida: {flight.DepartureTime}; Chegada: {flight.ArrivalTime};" + 
+                                    $"\nCodigo do Voo: {flight.Id}\n");
+            }
+        }
+
         public void SearchById()
         {
             Console.WriteLine("Informe o ID do voo desejado: ");
@@ -57,7 +70,7 @@ namespace BuyTickets.views
                 Console.WriteLine($"Codigo Empresa: {flightResult.Enterprise.Id}; Empresa: {flightResult.Enterprise.Name};" +
                                     $"Origem: {flightResult.Origin}; Destino: {flightResult.Destiny}" +
                                     $"\nData: {flightResult.Date}; Saida: {flightResult.DepartureTime}; Chegada: {flightResult.ArrivalTime};" + 
-                                    $"\nCodigo do Voo: {flightResult.Id}");
+                                    $"\nCodigo do Voo: {flightResult.Id}\n");
             }
         }
 
