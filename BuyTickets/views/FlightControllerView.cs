@@ -47,12 +47,19 @@ namespace BuyTickets.views
         {
             var flightListResult = _flightController.SearchAll();
 
-            foreach (var flight in flightListResult)
+            if (flightListResult == null)
             {
-                Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.Name};" +
-                                    $"Origem: {flight.Origin}; Destino: {flight.Destiny}" +
-                                    $"\nData: {flight.Date}; Saida: {flight.DepartureTime}; Chegada: {flight.ArrivalTime};" + 
-                                    $"\nCodigo do Voo: {flight.Id}\n");
+                Console.WriteLine("Nenhum voo foi cadastrado até o momento...");
+            }
+            else
+            {
+                foreach (var flight in flightListResult)
+                {
+                    Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.Name};" +
+                                        $"Origem: {flight.Origin}; Destino: {flight.Destiny}" +
+                                        $"\nData: {flight.Date}; Saida: {flight.DepartureTime}; Chegada: {flight.ArrivalTime};" + 
+                                        $"\nCodigo do Voo: {flight.Id}\n");
+                }
             }
         }
 
