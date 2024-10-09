@@ -94,6 +94,28 @@ namespace BuyTickets.views
             }     
         }
 
+        public void Delete(Enterprise enterprise)
+        {
+            var enterpriseResult = _enterpriseController.SearchById(enterprise.Id);
+            if (enterpriseResult == null)
+            {
+                Console.WriteLine("Empresa não encontrada...");
+            }
+            else
+            {
+                var resultDeleteEnterprise = _enterpriseController.Delete(enterpriseResult.Id);
+
+                if (resultDeleteEnterprise == null)
+                {
+                    Console.WriteLine($"Ocorreu um erro ao tentar deletar o voo informado...");
+                }
+                else
+                {
+                    Console.WriteLine($"Empresa {enterpriseResult.Id} deletada com sucesso!!!");
+                }
+            }
+        }
+
         public void Login(MenuView menuView)
         {
             Console.WriteLine("Informe o email: ");
