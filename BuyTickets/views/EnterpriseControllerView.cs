@@ -24,7 +24,7 @@ namespace BuyTickets.views
             var email = Console.ReadLine();
             Console.WriteLine("Informe a senha");
             var password = Console.ReadLine();
-            Enterprise enterprise = new Enterprise(name, email, password);
+            Enterprise enterprise = new Enterprise(name!, email, password);
 
             var result = _enterpriseController.Create(enterprise);
 
