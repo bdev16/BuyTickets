@@ -1,41 +1,79 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BuyTickets.Controllers;
 using BuyTickets.models;
+using BuyTickets.Validations;
 
 namespace BuyTickets.views
 {
     public class EnterpriseControllerView
     {
         private EnterpriseController _enterpriseController;
+        private GlobalValidations _globalValidations;
 
-        public EnterpriseControllerView(EnterpriseController enterpriseController)
+        public EnterpriseControllerView(EnterpriseController enterpriseController, GlobalValidations globalValidations)
         { 
             _enterpriseController = enterpriseController;
+            _globalValidations = globalValidations;
         }
 
         public void Create()
         {
-            Console.WriteLine("Informe o nome da empresa: ");
-            var name = Console.ReadLine();
-            Console.WriteLine("Informe o email: ");
-            var email = Console.ReadLine();
-            Console.WriteLine("Informe a senha");
-            var password = Console.ReadLine();
-            Enterprise enterprise = new Enterprise(name!, email, password);
-
-            var result = _enterpriseController.Create(enterprise);
-
-            if (result == null)
+            //Essa variavel verifica se a empresa foi registrada ou não
+            //Inicia como FALSE para conseguir entrar no loop
+            bool enterpriseRegistred = false;
+            //O loop está presente para fixar o usuario na tela de cadastro até ele conseguir realizar o cadastro.
+            while (enterpriseRegistred != true)
             {
-                Console.WriteLine("Ocorreu um erro no cadastro da empresa...");
+                Console.Clear();
+                Console.WriteLine("Informe o nome da empresa: ");
+                var name = Console.ReadLine();
+                //A condição verifica se o valor informado pelo usuario é uma string vazia, se for a variavel vai receber o valor null
+                //Se não ele vai seguir com o valor que foi informado pelo usuario
+                if (name == "")
+                    name = null;
+                Console.WriteLine("Informe o email: ");
+                var email = Console.ReadLine();
+                if (email == "")
+                    email = null;
+                Console.WriteLine("Informe a senha");
+                var password = Console.ReadLine();
+                if (password == "")
+                    password = null;
+                Enterprise enterprise = new Enterprise(name, email, password);
+
+                //Vai receber uma lista de notificações referentes as validações dos dados informados pelo usuario
+                var resultValidantions = _globalValidations.CreateEnterpriseValidate(name, email, password);
+
+                //Se o atributo da lista sucess for falso o usuario vai receber em sua tela uma lista de erros que ocorreram
+                //O que vai fazer ele retornar ao inicio do ciclo de cadastro
+                //Se não a empresa vai ser registrada na lista presente no controlador de Enterprise e vai atribuir o valor de true
+                //Na variavel enterpriseRegistred fazendo com que a estrutura de repetição acabe
+                if (resultValidantions.Success == false)
+                {
+                    Console.WriteLine(JsonSerializer.Serialize(resultValidantions));
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.Clear();
+                    var result = _enterpriseController.Create(enterprise);
+                    Console.WriteLine($"Empresa {result.Id} cadastrada com sucesso!!!");
+                    enterpriseRegistred = true;
+                }
             }
-            else
-            {
-                Console.WriteLine($"Empresa {result.Id} cadastrada com sucesso!!!");
-            }
+            
+            // if (result == null)
+            // {
+            //     Console.WriteLine("Ocorreu um erro no cadastro da empresa...");
+            // }
+            // else
+            // {
+            //     Console.WriteLine($"Empresa {result.Id} cadastrada com sucesso!!!");
+            // }
         }
 
         public void SearchAll()
