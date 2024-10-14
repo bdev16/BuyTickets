@@ -23,11 +23,18 @@ namespace BuyTickets.models
         public Flight(string origin, string destiny, string date, string departureTime, string arrivalTime, Enterprise enterprise)
         {
             Id = Guid.NewGuid();
-            Origin = origin;
-            Destiny = destiny;
+            Origin = origin.ToUpper();
+            Destiny = destiny.ToUpper();
             Date = DateTime.Parse(date);
-            DepartureTime = DateTime.Parse(departureTime);
-            ArrivalTime = DateTime.Parse(arrivalTime);
+            //Abaixo são criadas variaveis secundarias que vão servir para capturar
+            //Somente a parte da data sem utilizar o horario e utiliza-lá para montar
+            //Adicionar nas variaveis departureTime e arrivalTime
+            var dateInformed = date.Split(' ');
+            var dateCaptured = dateInformed[0];
+            var departureTimeWithDateInclude = $"{dateCaptured} {departureTime}";
+            DepartureTime = DateTime.Parse(departureTimeWithDateInclude);
+            var arrivalTimeWithDateInclude = $"{dateCaptured} {arrivalTime}";
+            ArrivalTime = DateTime.Parse(arrivalTimeWithDateInclude);
             Enterprise = enterprise;
         }
     }

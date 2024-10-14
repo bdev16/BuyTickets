@@ -32,7 +32,7 @@ namespace BuyTickets.models
             AddNotifications(contract); 
                                  
             Id = Guid.NewGuid();
-            Name = name;
+            Name = name.ToUpper();
             Email = email;
             Password = password;
             Flights = new List<Flight>();

@@ -46,15 +46,15 @@ namespace BuyTickets.views
                 Enterprise enterprise = new Enterprise(name, email, password);
 
                 //Vai receber uma lista de notificações referentes as validações dos dados informados pelo usuario
-                var resultValidantions = _globalValidations.CreateEnterpriseValidate(name, email, password);
+                var resultValidations = _globalValidations.CreateEnterpriseValidate(name, email, password);
 
                 //Se o atributo da lista sucess for falso o usuario vai receber em sua tela uma lista de erros que ocorreram
                 //O que vai fazer ele retornar ao inicio do ciclo de cadastro
                 //Se não a empresa vai ser registrada na lista presente no controlador de Enterprise e vai atribuir o valor de true
                 //Na variavel enterpriseRegistred fazendo com que a estrutura de repetição acabe
-                if (resultValidantions.Success == false)
+                if (resultValidations.Success == false)
                 {
-                    Console.WriteLine(JsonSerializer.Serialize(resultValidantions));
+                    Console.WriteLine(JsonSerializer.Serialize(resultValidations));
                     Console.ReadKey();
                 }
                 else
@@ -63,6 +63,7 @@ namespace BuyTickets.views
                     var result = _enterpriseController.Create(enterprise);
                     Console.WriteLine($"Empresa {result.Id} cadastrada com sucesso!!!");
                     enterpriseRegistred = true;
+                    Console.ReadKey();
                 }
             }
             
@@ -78,6 +79,20 @@ namespace BuyTickets.views
 
         public void SearchAll()
         {
+            // try
+            // {
+            //     var enterpriseListResult = _enterpriseController.SearchAll();
+
+            //     foreach (var enterprise in enterpriseListResult)
+            //     {
+            //         Console.WriteLine($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.Name};\n");
+            //     }
+            // }
+            // catch ()
+            // {
+            //     Console.WriteLine("Nenhuma empresa foi cadastrada até o momento...");
+            // }
+
             var enterpriseListResult = _enterpriseController.SearchAll();
 
             if (enterpriseListResult == null)

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BuyTickets.Controllers;
 using BuyTickets.models;
+using BuyTickets.Validations;
 
 
 namespace BuyTickets.views
@@ -11,36 +13,67 @@ namespace BuyTickets.views
     public class FlightControllerView
     {
         private FlightController _flightController;
+        private GlobalValidations _globalValidations;
 
-        public FlightControllerView(FlightController flightController)
+        public FlightControllerView(FlightController flightController, GlobalValidations globalValidations)
         {
             _flightController = flightController;
+            _globalValidations = globalValidations;
         }
 
         public void Create(Enterprise enterprise)
         {
-            Console.WriteLine("Informe o local de origem do voo: ");
-            var origin = Console.ReadLine();
-            Console.WriteLine("Informe o local de destino do voo: ");
-            var destiny = Console.ReadLine();
-            Console.WriteLine("Informe a data do voo: ");
-            var date = Console.ReadLine();
-            Console.WriteLine("Informe a hora de saida do voo: ");
-            var departureTime = Console.ReadLine();
-            Console.WriteLine("Informe a hora de chegada do voo: ");
-            var arrivalTime = Console.ReadLine();
-            Flight flight = new Flight(origin, destiny, date, departureTime, arrivalTime, enterprise);
-            
-            var result = _flightController.Create(flight);
+            bool vooRegistred = false;
+            while (vooRegistred != true)
+            {
+                Console.Clear();
+                Console.WriteLine("Informe o local de origem do voo: ");
+                var origin = Console.ReadLine();
+                Console.WriteLine("Informe o local de destino do voo: ");
+                var destiny = Console.ReadLine();
+                Console.WriteLine("Informe a data do voo: ");
+                var date = Console.ReadLine();
+                Console.WriteLine("Informe a hora de saida do voo: ");
+                var departureTime = Console.ReadLine();
+                Console.WriteLine("Informe a hora de chegada do voo: ");
+                var arrivalTime = Console.ReadLine();
 
-            if (result == null)
-            {
-                Console.WriteLine("O voo não foi criado...");
+                try
+                {
+                    Flight flight = new Flight(origin, destiny, date, departureTime, arrivalTime, enterprise);
+                
+                    var resultValidations = _globalValidations.CreateFlightValidate(origin, destiny, date, departureTime, arrivalTime);
+                    
+                    if (resultValidations.Success == false)
+                    {
+                        Console.WriteLine(JsonSerializer.Serialize(resultValidations));
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        var result = _flightController.Create(flight);
+                        Console.WriteLine($"Voo {result.Id} cadastrado com sucesso!!!");
+                        vooRegistred = true;
+                        Console.ReadKey();
+                    }
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine($"Erro ao tentar criar o Voo: {ex.Message}\nTente novamente.");
+                }  
             }
-            else
-            {
-                Console.WriteLine($"Voo {flight.Id} criado com sucesso!!!");
-            }
+            
+            // var result = _flightController.Create(flight);
+
+            // if (result == null)
+            // {
+            //     Console.WriteLine("O voo não foi criado...");
+            // }
+            // else
+            // {
+            //     Console.WriteLine($"Voo {flight.Id} criado com sucesso!!!");
+            // }
         }
 
         public void SearchAll()

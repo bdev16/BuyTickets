@@ -8,7 +8,7 @@ using BuyTickets.Controllers;
 using BuyTickets.views;
 using BuyTickets.Validations;
 
-// Enterprise enterprise = new Enterprise(null, "latamairlines@gmail.com", "latam123");
+ Enterprise enterprise = new Enterprise(null, "latamairlines@gmail.com", "latam123");
 
 // Verifier verifier = new Verifier();
 
@@ -16,17 +16,39 @@ using BuyTickets.Validations;
 
 // Console.WriteLine(JsonSerializer.Serialize(result));
 
-List<Enterprise> enterprises = new List<Enterprise>();
+ List<Enterprise> enterprises = new List<Enterprise>();
 
-// EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+ EnterpriseController enterpriseController = new EnterpriseController(enterprises);
 
-// GlobalValidations globalValidations = new GlobalValidations();
+ GlobalValidations globalValidations = new GlobalValidations();
 
-// EnterpriseControllerView enterpriseControllerView = new EnterpriseControllerView(enterpriseController, globalValidations);
+ EnterpriseControllerView enterpriseControllerView = new EnterpriseControllerView(enterpriseController, globalValidations);
 
 // enterpriseControllerView.Create();
 
-foreach (var enterprise in enterprises)
-{
-    Console.WriteLine(enterprise);
-}
+// foreach (var enterprise in enterprises)
+// {
+//     Console.WriteLine(enterprise);
+// }
+
+ List<Flight> flights = new List<Flight>();
+
+ Flight flight = new Flight("SAO PAULO", "RECIFE", "14-10-2024 08:00", "08:00", "10:00", enterprise);
+
+ FlightController flightController = new FlightController(flights);
+
+ var result = flightController.Create(flight);
+
+ Console.WriteLine($"Voo {result.Id} foi criado com sucesso!\nData: {result.Date}; Horario de saida: {result.DepartureTime}; Horario de chegada: {result.ArrivalTime}");
+
+ FlightControllerView flightControllerView = new FlightControllerView(flightController, globalValidations);
+
+ flightControllerView.Create(enterprise);
+
+
+
+
+
+
+
+
