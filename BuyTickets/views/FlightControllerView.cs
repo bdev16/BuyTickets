@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BuyTickets.Controllers;
 using BuyTickets.models;
+using BuyTickets.Validations;
 
 
 namespace BuyTickets.views
@@ -11,36 +13,68 @@ namespace BuyTickets.views
     public class FlightControllerView
     {
         private FlightController _flightController;
+        private GlobalValidations _globalValidations;
 
-        public FlightControllerView(FlightController flightController)
+        public FlightControllerView(FlightController flightController, GlobalValidations globalValidations)
         {
             _flightController = flightController;
+            _globalValidations = globalValidations;
         }
 
         public void Create(Enterprise enterprise)
         {
-            Console.WriteLine("Informe o local de origem do voo: ");
-            var origin = Console.ReadLine();
-            Console.WriteLine("Informe o local de destino do voo: ");
-            var destiny = Console.ReadLine();
-            Console.WriteLine("Informe a data do voo: ");
-            var date = Console.ReadLine();
-            Console.WriteLine("Informe a hora de saida do voo: ");
-            var departureTime = Console.ReadLine();
-            Console.WriteLine("Informe a hora de chegada do voo: ");
-            var arrivalTime = Console.ReadLine();
-            Flight flight = new Flight(origin, destiny, date, departureTime, arrivalTime, enterprise);
-            
-            var result = _flightController.Create(flight);
+            bool vooRegistred = false;
+            while (vooRegistred != true)
+            {
+                Console.Clear();
+                Console.WriteLine("Informe o local de origem do voo: ");
+                var origin = Console.ReadLine();
+                Console.WriteLine("Informe o local de destino do voo: ");
+                var destiny = Console.ReadLine();
+                Console.WriteLine("Informe a data do voo: ");
+                var date = Console.ReadLine();
+                Console.WriteLine("Informe a hora de saida do voo: ");
+                var departureTime = Console.ReadLine();
+                Console.WriteLine("Informe a hora de chegada do voo: ");
+                var arrivalTime = Console.ReadLine();
 
-            if (result == null)
-            {
-                Console.WriteLine("O voo não foi criado...");
+                // try
+                // {
+                    var resultValidations = _globalValidations.CreateFlightValidate(origin, destiny, date, departureTime, arrivalTime);
+                
+                    if (resultValidations.Success == false)
+                    {
+                        Console.WriteLine(JsonSerializer.Serialize(resultValidations));
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Flight flight = new Flight(origin, destiny, date, departureTime, arrivalTime, enterprise);
+                        var result = _flightController.Create(flight);
+                        Console.WriteLine($"Voo {result.Id} cadastrado com sucesso!!!");
+                        vooRegistred = true;
+                        Console.ReadKey();
+                    }
+                // }
+                // catch (FormatException ex)
+                // {
+                //     Console.Clear();
+                //     Console.WriteLine(ex.Message);
+                //     Console.ReadKey();
+                // }  
             }
-            else
-            {
-                Console.WriteLine($"Voo {flight.Id} criado com sucesso!!!");
-            }
+            
+            // var result = _flightController.Create(flight);
+
+            // if (result == null)
+            // {
+            //     Console.WriteLine("O voo não foi criado...");
+            // }
+            // else
+            // {
+            //     Console.WriteLine($"Voo {flight.Id} criado com sucesso!!!");
+            // }
         }
 
         public void SearchAll()
@@ -103,61 +137,125 @@ namespace BuyTickets.views
 
         public void Update()
         {
-            Console.WriteLine("Informe o ID do voo desejado: ");
-            var flightId = Guid.Parse(Console.ReadLine());
-            var flightResult = _flightController.SearchById(flightId);
-            if (flightResult == null)
+            //A estrutura Try Catch esta sendo utilizada para impedir uma exceção relacionado ao formato do dado que vai ser informado pelo usuario
+            try
             {
-                Console.WriteLine("Voo não encontrado...");
-            }
-            else
-            {
-                Console.WriteLine("Os dados informados vão modificar os dados do voo existente.");
-                Console.WriteLine("Informe o local de origem do voo: ");
-                flightResult.Origin = Console.ReadLine();
-                Console.WriteLine("Informe o local de destino do voo: ");
-                flightResult.Destiny = Console.ReadLine();
-                Console.WriteLine("Informe a data do voo: ");
-                flightResult.Date = DateTime.Parse(Console.ReadLine());
-                Console.WriteLine("Informe a hora de saida do voo: ");
-                flightResult.DepartureTime = DateTime.Parse(Console.ReadLine());
-                Console.WriteLine("Informe a hora de chegada do voo: ");
-                flightResult.ArrivalTime = DateTime.Parse(Console.ReadLine());
-                var resultUpdateFlight = _flightController.Update(flightResult);
-                
-                if (resultUpdateFlight == null)
+                Console.WriteLine("Informe o ID do voo desejado: ");
+                var flightId = Guid.Parse(Console.ReadLine());
+                var flightResult = _flightController.SearchById(flightId);
+                if (flightResult == null)
                 {
-                    Console.WriteLine("Ocorreu um erro ao realizar as modificações");
+                    Console.WriteLine("Voo não encontrado...");
                 }
                 else
                 {
-                    Console.WriteLine($"Voo {resultUpdateFlight.Id} foi modificado com sucesso!!!");
+                    Console.WriteLine("Os dados informados vão modificar os dados do voo existente.");
+                    Console.WriteLine("Informe o local de origem do voo: ");
+                    //O codigo abaixo, cria uma variavel de verificação que ao receber um valor qualquer do usuario
+                    //Ela vai ser atribuida ao atributo do elemento pesquisado anterior, substituindo o valor anterior
+                    //Se ele não receber nenhum valor ela vai atribuir o valor atual do atributo ao atributo novamente
+                    //Não modificando o valor do mesmo
+                    var origin = Console.ReadLine();
+                    if (origin == "")
+                    {
+                        flightResult.Origin = flightResult.Origin;
+                    }
+                    else
+                    {
+                        flightResult.Origin = origin!;
+                    }
+                    Console.WriteLine("Informe o local de destino do voo: ");
+                    var destiny = Console.ReadLine();
+                    if (destiny == "")
+                    {
+                        flightResult.Destiny = flightResult.Destiny;
+                    }
+                    else
+                    {
+                        flightResult.Destiny= destiny!;
+                    }
+                    Console.WriteLine("Informe a data do voo: ");
+                    var date = Console.ReadLine();
+                    if (date == "")
+                    {
+                        flightResult.Date = flightResult.Date;
+                    }
+                    else
+                    {
+                        flightResult.Date = DateTime.Parse(date!);
+                    }
+                    Console.WriteLine("Informe a hora de saida do voo: ");
+                    var departureTime = Console.ReadLine();
+                    if (date == "")
+                    {
+                        flightResult.DepartureTime = flightResult.DepartureTime;
+                    }
+                    else
+                    {
+                        flightResult.DepartureTime = DateTime.Parse(departureTime!);
+                    }
+                    Console.WriteLine("Informe a hora de chegada do voo: ");
+                    var arrivalTime = Console.ReadLine();
+                    if (date == "")
+                    {
+                        flightResult.ArrivalTime = flightResult.ArrivalTime;
+                    }
+                    else
+                    {
+                        flightResult.ArrivalTime = DateTime.Parse(arrivalTime!);
+                    }
+                    var resultUpdateFlight = _flightController.Update(flightResult);
+                    
+                    if (resultUpdateFlight == null)
+                    {
+                        Console.WriteLine("Ocorreu um erro ao realizar as modificações");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Voo {resultUpdateFlight.Id} foi modificado com sucesso!!!");
+                    }
                 }
             }
+            catch (FormatException)
+            {
+                Console.Clear();
+                Console.WriteLine("O id informado não segue o padrão de estrutura do tipo de ID utilizado dentro do sistema...");
+            }
+            
         }
 
         public void Delete()
         {
-            Console.WriteLine("Informe o ID do voo desejado: ");
-            var flightId = Guid.Parse(Console.ReadLine());
-            var flightResult = _flightController.SearchById(flightId);
-            if (flightResult == null)
+            //A estrutura Try Catch esta sendo utilizada para impedir uma exceção relacionado ao formato do dado que vai ser informado pelo usuario
+            try
             {
-                Console.WriteLine("Voo não encontrado...");
-            }
-            else
-            {
-                var resultDeleteFlight = _flightController.Delete(flightResult.Id);
-
-                if (resultDeleteFlight == null)
+                Console.WriteLine("Informe o ID do voo desejado: ");
+                var flightId = Guid.Parse(Console.ReadLine());
+                var flightResult = _flightController.SearchById(flightId);
+                if (flightResult == null)
                 {
-                    Console.WriteLine($"Ocorreu um erro ao tentar deletar o voo informado...");
+                    Console.WriteLine("Voo não encontrado...");
                 }
                 else
                 {
-                    Console.WriteLine($"Voo {flightResult.Id} deletado com sucesso!!!");
+                    var resultDeleteFlight = _flightController.Delete(flightResult.Id);
+
+                    if (resultDeleteFlight == null)
+                    {
+                        Console.WriteLine($"Ocorreu um erro ao tentar deletar o voo informado...");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Voo {flightResult.Id} deletado com sucesso!!!");
+                    }
                 }
+            } 
+            catch(FormatException)
+            {
+                Console.Clear();
+                Console.WriteLine("O id informado não segue o padrão de estrutura do tipo de ID utilizado dentro do sistema...");
             }
+            
         }
     }
 }

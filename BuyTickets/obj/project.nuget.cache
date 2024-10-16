@@ -1,8 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "2HWMygV60UA=",
+  "dgSpecHash": "FPvBLOVd+ZM=",
   "success": true,
   "projectFilePath": "C:\\Users\\aluno\\Documents\\dev\\BuyTickets\\BuyTickets\\BuyTickets.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
+  "expectedPackageFiles": [
+    "C:\\Users\\aluno\\.nuget\\packages\\flunt\\2.0.5\\flunt.2.0.5.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema ao ler o arquivo de cache C:\\Users\\aluno\\Documents\\dev\\BuyTickets\\BuyTickets\\obj\\project.nuget.cache: Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
