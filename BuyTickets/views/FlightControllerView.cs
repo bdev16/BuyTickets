@@ -114,15 +114,58 @@ namespace BuyTickets.views
             {
                 Console.WriteLine("Os dados informados vão modificar os dados do voo existente.");
                 Console.WriteLine("Informe o local de origem do voo: ");
-                flightResult.Origin = Console.ReadLine();
+                //O codigo abaixo, cria uma variavel de verificação que ao receber um valor qualquer do usuario
+                //Caso o valor informado pelo usuario for vazio, o atributo em questão de empresa vai receber o valor atual dele sem altera-lo
+                //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
+                var origin = Console.ReadLine();
+                if (origin == "")
+                {
+                    flightResult.Origin = flightResult.Origin;
+                }
+                else
+                {
+                    flightResult.Origin = origin!;
+                }
                 Console.WriteLine("Informe o local de destino do voo: ");
-                flightResult.Destiny = Console.ReadLine();
+                var destiny = Console.ReadLine();
+                if (destiny == "")
+                {
+                    flightResult.Destiny = flightResult.Destiny;
+                }
+                else
+                {
+                    flightResult.Destiny= destiny!;
+                }
                 Console.WriteLine("Informe a data do voo: ");
-                flightResult.Date = DateTime.Parse(Console.ReadLine());
+                var date = Console.ReadLine();
+                if (date == "")
+                {
+                    flightResult.Date = flightResult.Date;
+                }
+                else
+                {
+                    flightResult.Date = DateTime.Parse(date!);
+                }
                 Console.WriteLine("Informe a hora de saida do voo: ");
-                flightResult.DepartureTime = DateTime.Parse(Console.ReadLine());
+                var departureTime = Console.ReadLine();
+                if (date == "")
+                {
+                    flightResult.DepartureTime = flightResult.DepartureTime;
+                }
+                else
+                {
+                    flightResult.DepartureTime = DateTime.Parse(departureTime!);
+                }
                 Console.WriteLine("Informe a hora de chegada do voo: ");
-                flightResult.ArrivalTime = DateTime.Parse(Console.ReadLine());
+                var arrivalTime = Console.ReadLine();
+                if (date == "")
+                {
+                    flightResult.ArrivalTime = flightResult.ArrivalTime;
+                }
+                else
+                {
+                    flightResult.ArrivalTime = DateTime.Parse(arrivalTime!);
+                }
                 var resultUpdateFlight = _flightController.Update(flightResult);
                 
                 if (resultUpdateFlight == null)
