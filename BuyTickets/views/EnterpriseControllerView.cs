@@ -4,16 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using BuyTickets.Controllers;
 using BuyTickets.models;
+using Flunt.Notifications;
 
 namespace BuyTickets.views
 {
     public class EnterpriseControllerView
     {
         private EnterpriseController _enterpriseController;
+        private GlobalValidations _globalValidations;
 
-        public EnterpriseControllerView(EnterpriseController enterpriseController)
+        public EnterpriseControllerView(EnterpriseController enterpriseController, GlobalValidations globalValidations)
         { 
             _enterpriseController = enterpriseController;
+            _globalValidations = globalValidations;
         }
 
         public void Create()
@@ -24,17 +27,41 @@ namespace BuyTickets.views
             var email = Console.ReadLine();
             Console.WriteLine("Informe a senha");
             var password = Console.ReadLine();
-            Enterprise enterprise = new Enterprise(name, email, password);
 
-            var result = _enterpriseController.Create(enterprise);
+             //Utiliza o método CreateFlightValidations da classeglobalValidations para verificar se os dados informados pelo o usuarios são validos
+            var resultValidations = _globalValidations.CreateEnterpriseValidate(name, email, password);
 
-            if (result == null)
+            //Tenta converter o atributo Data da classe NotificationResult para um Lista de notificações
+            //Se a conversão for feita com sucesso vai ser retornada uma lista se não vai ser retornado um null
+            var listNotification = resultValidations.Data as IEnumerable<Notification>;
+            
+            if (resultValidations.Success == false)
             {
-                Console.WriteLine("Ocorreu um erro no cadastro da empresa...");
+                Console.Clear();
+                Console.WriteLine("Erros: ");
+                if (listNotification != null)
+                {
+                    foreach(var result in listNotification)
+                    {
+                        Console.WriteLine($"    - {result.Message}");
+                    }
+                }
+                Console.ReadKey();
             }
             else
             {
-                Console.WriteLine($"Empresa {result.Id} cadastrada com sucesso!!!");
+                Enterprise enterprise = new Enterprise(name, email, password);
+
+                var result = _enterpriseController.Create(enterprise);
+
+                if (result == null)
+                {
+                    Console.WriteLine("Ocorreu um erro no cadastro da empresa...");
+                }
+                else
+                {
+                    Console.WriteLine($"Empresa {result.Id} cadastrada com sucesso!!!");
+                }
             }
         }
 
@@ -113,7 +140,9 @@ namespace BuyTickets.views
                 {
                     enterpriseResult.Password = password;
                 }
+                
                 var enterpriseUpdateResult = _enterpriseController.Update(enterpriseResult);
+
                 if (enterpriseUpdateResult == null)
                 {
                     Console.WriteLine("Ocorreu um erro ao tentar modificar os dados da empresa...");
