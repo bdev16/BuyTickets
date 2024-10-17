@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Bruno\\Documents\\dev\\Portifolio\\BuyTickets\\BuyTickets\\BuyTickets.csproj": {}
+    "C:\\Users\\bruno.alexandrino\\Documents\\dev\\BuyTickets\\BuyTickets\\BuyTickets.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Bruno\\Documents\\dev\\Portifolio\\BuyTickets\\BuyTickets\\BuyTickets.csproj": {
+    "C:\\Users\\bruno.alexandrino\\Documents\\dev\\BuyTickets\\BuyTickets\\BuyTickets.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Bruno\\Documents\\dev\\Portifolio\\BuyTickets\\BuyTickets\\BuyTickets.csproj",
+        "projectUniqueName": "C:\\Users\\bruno.alexandrino\\Documents\\dev\\BuyTickets\\BuyTickets\\BuyTickets.csproj",
         "projectName": "BuyTickets",
-        "projectPath": "C:\\Users\\Bruno\\Documents\\dev\\Portifolio\\BuyTickets\\BuyTickets\\BuyTickets.csproj",
-        "packagesPath": "C:\\Users\\Bruno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Bruno\\Documents\\dev\\Portifolio\\BuyTickets\\BuyTickets\\obj\\",
+        "projectPath": "C:\\Users\\bruno.alexandrino\\Documents\\dev\\BuyTickets\\BuyTickets\\BuyTickets.csproj",
+        "packagesPath": "C:\\Users\\bruno.alexandrino\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\bruno.alexandrino\\Documents\\dev\\BuyTickets\\BuyTickets\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Bruno\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\bruno.alexandrino\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,16 +38,17 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Flunt": {
+              "target": "Package",
+              "version": "[2.0.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -65,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
