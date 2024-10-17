@@ -103,78 +103,113 @@ namespace BuyTickets.views
 
         public void Update()
         {
-            Console.WriteLine("Informe o ID do voo desejado: ");
-            var flightId = Guid.Parse(Console.ReadLine());
-            var flightResult = _flightController.SearchById(flightId);
-            if (flightResult == null)
+            //A variavel flightInformad está sendo criada fora do escopo do Try para poder ser utilizada pelo Catch
+            //Podendo assim gerar uma mensagem de erro especifica caso ela esteja vazia ""
+            var flightInformed = "";
+            try
             {
-                Console.WriteLine("Voo não encontrado...");
+                //A variavel guidFormat está sendo criada para ser utilizada na estrutura condicional logo abaixo como uma varivel base
+                Guid guidFormat;
+                var flightId = new Guid();
+                Console.WriteLine("Informe o ID do voo desejado: ");
+                flightInformed = Console.ReadLine();
+                //Essa estrutura condicional verifica se o valor informado pelo usuario presente na variavle flightInformad está de acordo com
+                //O padrão de um Guid, se estiver o valor vai ser convertido normalmente para o tipo Guid, sendo atribuido pela variavel flightId
+                //Se não estiver de acordo com o padrão Guid, será gerada uma exceção do tipo Format
+                if (Guid.TryParse(flightInformed, out guidFormat))
+                {
+                    flightId = Guid.Parse(flightInformed);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+                var flightResult = _flightController.SearchById(flightId);
+
+                if (flightResult == null)
+                {
+                    Console.WriteLine("Voo não encontrado...");
+                }
+                else
+                {
+                    Console.WriteLine("Os dados informados vão modificar os dados do voo existente.");
+                    Console.WriteLine("Informe o local de origem do voo: ");
+                    //O codigo abaixo, cria uma variavel de verificação que ao receber um valor qualquer do usuario
+                    //Caso o valor informado pelo usuario for vazio, o atributo em questão de empresa vai receber o valor atual dele sem altera-lo
+                    //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
+                    var origin = Console.ReadLine();
+                    if (origin == "")
+                    {
+                        flightResult.Origin = flightResult.Origin;
+                    }
+                    else
+                    {
+                        flightResult.Origin = origin!;
+                    }
+                    Console.WriteLine("Informe o local de destino do voo: ");
+                    var destiny = Console.ReadLine();
+                    if (destiny == "")
+                    {
+                        flightResult.Destiny = flightResult.Destiny;
+                    }
+                    else
+                    {
+                        flightResult.Destiny= destiny!;
+                    }
+                    Console.WriteLine("Informe a data do voo: ");
+                    var date = Console.ReadLine();
+                    if (date == "")
+                    {
+                        flightResult.Date = flightResult.Date;
+                    }
+                    else
+                    {
+                        flightResult.Date = DateTime.Parse(date!);
+                    }
+                    Console.WriteLine("Informe a hora de saida do voo: ");
+                    var departureTime = Console.ReadLine();
+                    if (date == "")
+                    {
+                        flightResult.DepartureTime = flightResult.DepartureTime;
+                    }
+                    else
+                    {
+                        flightResult.DepartureTime = DateTime.Parse(departureTime!);
+                    }
+                    Console.WriteLine("Informe a hora de chegada do voo: ");
+                    var arrivalTime = Console.ReadLine();
+                    if (date == "")
+                    {
+                        flightResult.ArrivalTime = flightResult.ArrivalTime;
+                    }
+                    else
+                    {
+                        flightResult.ArrivalTime = DateTime.Parse(arrivalTime!);
+                    }
+                    var resultUpdateFlight = _flightController.Update(flightResult);
+                    
+                    if (resultUpdateFlight == null)
+                    {
+                        Console.WriteLine("Ocorreu um erro ao realizar as modificações");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Voo {resultUpdateFlight.Id} foi modificado com sucesso!!!");
+                    }
+                }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("Os dados informados vão modificar os dados do voo existente.");
-                Console.WriteLine("Informe o local de origem do voo: ");
-                //O codigo abaixo, cria uma variavel de verificação que ao receber um valor qualquer do usuario
-                //Caso o valor informado pelo usuario for vazio, o atributo em questão de empresa vai receber o valor atual dele sem altera-lo
-                //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
-                var origin = Console.ReadLine();
-                if (origin == "")
+                if (flightInformed == "")
                 {
-                    flightResult.Origin = flightResult.Origin;
+                    Console.Clear();
+                    Console.WriteLine("Erro: O ID informado não pode ser um valor vazio...");
                 }
                 else
                 {
-                    flightResult.Origin = origin!;
-                }
-                Console.WriteLine("Informe o local de destino do voo: ");
-                var destiny = Console.ReadLine();
-                if (destiny == "")
-                {
-                    flightResult.Destiny = flightResult.Destiny;
-                }
-                else
-                {
-                    flightResult.Destiny= destiny!;
-                }
-                Console.WriteLine("Informe a data do voo: ");
-                var date = Console.ReadLine();
-                if (date == "")
-                {
-                    flightResult.Date = flightResult.Date;
-                }
-                else
-                {
-                    flightResult.Date = DateTime.Parse(date!);
-                }
-                Console.WriteLine("Informe a hora de saida do voo: ");
-                var departureTime = Console.ReadLine();
-                if (date == "")
-                {
-                    flightResult.DepartureTime = flightResult.DepartureTime;
-                }
-                else
-                {
-                    flightResult.DepartureTime = DateTime.Parse(departureTime!);
-                }
-                Console.WriteLine("Informe a hora de chegada do voo: ");
-                var arrivalTime = Console.ReadLine();
-                if (date == "")
-                {
-                    flightResult.ArrivalTime = flightResult.ArrivalTime;
-                }
-                else
-                {
-                    flightResult.ArrivalTime = DateTime.Parse(arrivalTime!);
-                }
-                var resultUpdateFlight = _flightController.Update(flightResult);
-                
-                if (resultUpdateFlight == null)
-                {
-                    Console.WriteLine("Ocorreu um erro ao realizar as modificações");
-                }
-                else
-                {
-                    Console.WriteLine($"Voo {resultUpdateFlight.Id} foi modificado com sucesso!!!");
+                    Console.Clear();
+                    Console.WriteLine("Erro: O valor do ID informado não corresponde ao padrão existente...");
                 }
             }
         }
