@@ -31,7 +31,34 @@ namespace BuyTickets
                 IsTrue(isValidArrivalTime, "Horario de chegada", "O horario de chegada informado nao segue a estrutura de um horario valida");
             
             AddNotifications(contract);
-            
+
+            if(!IsValid)
+            {
+                return new NotificationResult(
+                    false,
+                    "Alguns erros foram gerados",
+                    Notifications         
+                );  
+            }
+            return new NotificationResult(
+                true,
+                "Mensagem",
+                null
+            );
+        }
+
+        public NotificationResult CreateEnterpriseValidate(string name, string email, string password)
+        {
+            Clear();
+            var contract = new Contract<Notification>().
+                Requires().
+                IsNotNull(name, "Nome", "O nome nao pode ser vazio").
+                IsNotNull(email, "Email", "O email nao pode ser vazio").
+                IsEmail(email, "Email", "O email informado nao e valido").
+                IsNotNull(password, "Senha", "A senha nao pode ser vazia");
+                
+            AddNotifications(contract.Notifications);
+            // var copyListNotifications = contract.Notifications;
             if(!IsValid)
             {
                 return new NotificationResult(

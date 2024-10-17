@@ -16,6 +16,5 @@ namespace BuyTickets
         public bool Success { get; private set; }
         public string Message { get; private set; }
         public object Data { get; private set; }
-
     }
 }
