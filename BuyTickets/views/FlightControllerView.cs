@@ -216,24 +216,59 @@ namespace BuyTickets.views
 
         public void Delete()
         {
-            Console.WriteLine("Informe o ID do voo desejado: ");
-            var flightId = Guid.Parse(Console.ReadLine());
-            var flightResult = _flightController.SearchById(flightId);
-            if (flightResult == null)
+            //A variavel flightInformad está sendo criada fora do escopo do Try para poder ser utilizada pelo Catch
+            //Podendo assim gerar uma mensagem de erro especifica caso ela esteja vazia ""
+            var flightInformed = "";
+            try
             {
-                Console.WriteLine("Voo não encontrado...");
-            }
-            else
-            {
-                var resultDeleteFlight = _flightController.Delete(flightResult.Id);
-
-                if (resultDeleteFlight == null)
+                //A variavel guidFormat está sendo criada para ser utilizada na estrutura condicional logo abaixo como uma varivel base
+                Guid guidFormat;
+                var flightId = new Guid();
+                Console.WriteLine("Informe o ID do voo desejado: ");
+                flightInformed = Console.ReadLine();
+                //Essa estrutura condicional verifica se o valor informado pelo usuario presente na variavle flightInformad está de acordo com
+                //O padrão de um Guid, se estiver o valor vai ser convertido normalmente para o tipo Guid, sendo atribuido pela variavel flightId
+                //Se não estiver de acordo com o padrão Guid, será gerada uma exceção do tipo Format
+                if (Guid.TryParse(flightInformed, out guidFormat))
                 {
-                    Console.WriteLine($"Ocorreu um erro ao tentar deletar o voo informado...");
+                    flightId = Guid.Parse(flightInformed);
                 }
                 else
                 {
-                    Console.WriteLine($"Voo {flightResult.Id} deletado com sucesso!!!");
+                    throw new Exception();
+                }
+
+                var flightResult = _flightController.SearchById(flightId);
+
+                if (flightResult == null)
+                {
+                    Console.WriteLine("Voo não encontrado...");
+                }
+                else
+                {
+                    var resultDeleteFlight = _flightController.Delete(flightResult.Id);
+
+                    if (resultDeleteFlight == null)
+                    {
+                        Console.WriteLine($"Ocorreu um erro ao tentar deletar o voo informado...");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Voo {flightResult.Id} deletado com sucesso!!!");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                if (flightInformed == "")
+                {
+                    Console.Clear();
+                    Console.WriteLine("Erro: O ID informado não pode ser um valor vazio...");
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Erro: O valor do ID informado não corresponde ao padrão existente...");
                 }
             }
         }
