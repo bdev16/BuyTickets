@@ -4,17 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using BuyTickets.Controllers;
 using BuyTickets.models;
+using Flunt.Notifications;
 
 
 namespace BuyTickets.views
 {
-    public class FlightControllerView
+    public class FlightControllerView : Notifiable<Notification>
     {
         private FlightController _flightController;
+        private GlobalValidations _globalValidations;
 
-        public FlightControllerView(FlightController flightController)
+        public FlightControllerView(FlightController flightController, GlobalValidations globalValidations)
         {
             _flightController = flightController;
+            _globalValidations = globalValidations;
         }
 
         public void Create(Enterprise enterprise)
@@ -29,18 +32,48 @@ namespace BuyTickets.views
             var departureTime = Console.ReadLine();
             Console.WriteLine("Informe a hora de chegada do voo: ");
             var arrivalTime = Console.ReadLine();
-            Flight flight = new Flight(origin, destiny, date, departureTime, arrivalTime, enterprise);
-            
-            var result = _flightController.Create(flight);
 
-            if (result == null)
+            //Utiliza o método CreateFlightValidations da classeglobalValidations para verificar se os dados informados pelo o usuarios são validos
+            var resultValidations = _globalValidations.CreateFlightValidate(origin, destiny, date, departureTime, arrivalTime);
+
+            //Tenta converter o atributo Data da classe NotificationResult para um Lista de notificações
+            //Se a conversão for feita com sucesso vai ser retornada uma lista se não vai ser retornado um null
+            var listNotification = resultValidations.Data as IEnumerable<Notification>;
+
+            if (resultValidations.Success == false)
             {
-                Console.WriteLine("O voo não foi criado...");
+                Console.Clear();
+                Console.WriteLine("Erros: ");
+                if (listNotification != null)
+                {
+                    foreach(var result in listNotification)
+                    {
+                        Console.WriteLine($"    - {result.Message}");
+                    }
+                }
+                Console.ReadKey();
             }
             else
             {
-                Console.WriteLine($"Voo {flight.Id} criado com sucesso!!!");
+                Console.Clear();
+                Flight flight = new Flight(origin, destiny, date, departureTime, arrivalTime, enterprise);
+                var result = _flightController.Create(flight);
+                Console.WriteLine($"Voo {result.Id} cadastrado com sucesso!!!");
+                Console.ReadKey();
             }
+
+            // Flight flight = new Flight(origin, destiny, date, departureTime, arrivalTime, enterprise);
+            
+            // var result = _flightController.Create(flight);
+
+            // if (result == null)
+            // {
+            //     Console.WriteLine("O voo não foi criado...");
+            // }
+            // else
+            // {
+            //     Console.WriteLine($"Voo {flight.Id} criado com sucesso!!!");
+            // }
         }
 
         public void SearchAll()
