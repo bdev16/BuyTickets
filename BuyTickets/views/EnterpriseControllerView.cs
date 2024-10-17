@@ -78,11 +78,42 @@ namespace BuyTickets.views
             }
             else
             {
-                enterpriseResult.Name = Console.ReadLine();
-                enterpriseResult.Email = Console.ReadLine();
-                enterpriseResult.Password = Console.ReadLine();
+                //O codigo abaixo, cria uma variavel de verificação que ao receber um valor qualquer do usuario
+                //Caso o valor informado pelo usuario for vazio, o atributo em questão de empresa vai receber o valor atual dele sem altera-lo
+                //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
+                Console.WriteLine("Os dados informados vão modificar os dados existente de empresa...");
+                Console.ReadKey();
+                Console.WriteLine("Informe o nome da empresa: ");
+                var name = Console.ReadLine();
+                if (name == "")
+                {
+                    enterprise.Name = enterprise.Name;
+                }
+                else
+                {
+                    enterpriseResult.Name = name;
+                }
+                Console.WriteLine("Informe o email: ");
+                var email = Console.ReadLine();
+                if (email == "")
+                {
+                    enterprise.Email = enterprise.Email;
+                }
+                else
+                {
+                    enterprise.Email = email;
+                }
+                Console.WriteLine("Informe a senha");
+                var password = Console.ReadLine();
+                if (password == "")
+                {
+                    enterprise.Password = enterprise.Password;
+                }
+                else
+                {
+                    enterpriseResult.Password = password;
+                }
                 var enterpriseUpdateResult = _enterpriseController.Update(enterpriseResult);
-
                 if (enterpriseUpdateResult == null)
                 {
                     Console.WriteLine("Ocorreu um erro ao tentar modificar os dados da empresa...");
