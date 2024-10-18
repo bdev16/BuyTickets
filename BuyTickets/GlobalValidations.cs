@@ -16,19 +16,28 @@ namespace BuyTickets
             //Cria uma variavel do tipo DateTime que vai servir como uma referencia
             DateTime dateFormat;
             //Os codigos abaixo tentam fazer a conversão dos valores que vão ser utilizados para o tipo datetime
-            bool isValidDate = DateTime.TryParse(date, out dateFormat);
-            bool isValidDepartureTime = DateTime.TryParse(departureTime, out dateFormat);
-            bool isValidArrivalTime = DateTime.TryParse(arrivalTime, out dateFormat);
+            bool isNotValidFormatDate = DateTime.TryParse(date, out dateFormat);
+            // bool isValidDate = DateTime.Parse(date) < DateTime.Now ? false : true;
+
+            var dateInformed = date.Split(' ');
+            var dateCaptured = dateInformed[0];
+            var departureTimeWithDateInclude = $"{dateCaptured} {departureTime}";
+            var arrivalTimeWithDateInclude = $"{dateCaptured} {arrivalTime}";
+
+            bool isNotValidDepartureTime = DateTime.TryParse(departureTimeWithDateInclude, out dateFormat);
+            bool isNotValidArrivalTime = DateTime.TryParse(arrivalTimeWithDateInclude, out dateFormat);
+            
             var contract = new Contract<Notification>().
                 Requires().
-                IsNotNull(origin, "Origem", "O local de origem nao pode ser vazio").
-                IsNotNull(destiny, "Destino", "O local de destino nao pode ser vazio").
-                IsNotNull(date, "Data", "A data do voo nao pode ser vazia").
-                IsTrue(isValidDate, "Data", "A data informada nao e uma data valida").
-                IsNotNull(departureTime, "Horario de saida", "O horario de saida nao pode ser vazio").
-                IsTrue(isValidDepartureTime, "Horario de saida", "O horario de saida informado nao segue a estrutura de um horario valida").
-                IsNotNull(arrivalTime, "Horario de chegada", "O horario de chegada nao pode ser vazio").
-                IsTrue(isValidArrivalTime, "Horario de chegada", "O horario de chegada informado nao segue a estrutura de um horario valida");
+                IsNotNullOrEmpty(origin, "Origem", "O local de origem nao pode ser vazio").
+                IsNotNullOrEmpty(destiny, "Destino", "O local de destino nao pode ser vazio").
+                IsNotNullOrEmpty(date, "Data", "A data do voo nao pode ser vazia").
+                IsTrue(isNotValidFormatDate, "Data", "A data informada nao e uma data valida").
+                // IsFalse(isNotValidFormatDate, "Data", "A data informada não pode ser menor que a data atual").
+                IsNotNullOrEmpty(departureTime, "Horario de saida", "O horario de saida nao pode ser vazio").
+                IsTrue(isNotValidDepartureTime, "Horario de saida", "O horario de saida informado nao segue a estrutura de um horario valida").
+                IsNotNullOrEmpty(arrivalTime, "Horario de chegada", "O horario de chegada nao pode ser vazio").
+                IsTrue(isNotValidArrivalTime, "Horario de chegada", "O horario de chegada informado nao segue a estrutura de um horario valida");
             
             AddNotifications(contract);
 
