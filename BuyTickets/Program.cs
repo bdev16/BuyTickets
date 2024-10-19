@@ -11,7 +11,7 @@ enterprises.Add(enterprise);
 
 GlobalValidations globalValidations = new GlobalValidations();
 EnterpriseController enterpriseController = new EnterpriseController(enterprises);
-EnterpriseControllerView enterpriseControllerView = new EnterpriseControllerView(enterpriseController);
+EnterpriseControllerView enterpriseControllerView = new EnterpriseControllerView(enterpriseController, globalValidations);
 FlightController flightController = new FlightController(flights);
 FlightControllerView flightControllerView = new FlightControllerView(flightController, globalValidations);
 
