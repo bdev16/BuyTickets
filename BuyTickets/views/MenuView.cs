@@ -21,7 +21,7 @@ namespace BuyTickets.views
         public void MainMenu(MenuView menuView)
         {
             bool exitSystem = false;
-
+            
             while (exitSystem != true)
             {
                 Console.Clear();
@@ -30,10 +30,11 @@ namespace BuyTickets.views
                 Console.WriteLine("=================================");
                 Console.WriteLine();
                 Console.WriteLine("[1]Empresas.\n[0]Sair do sistema.");
-                var optionUser = Convert.ToInt32(Console.ReadLine());
+                // var optionUser = Convert.ToInt32(Console.ReadLine());
+                var optionUser = Console.ReadLine();
                 switch (optionUser)
                 {
-                    case 1:
+                    case "1":
                         Console.Clear();
                         Console.WriteLine("[1]Login.\n[2]Cadastro.");
                         var optionUser2 = Convert.ToInt32(Console.ReadLine());
@@ -48,14 +49,23 @@ namespace BuyTickets.views
                         }
                         Console.ReadKey();
                         break;
-                    case 0:
+                    case "0":
                         Console.Clear();
                         Console.WriteLine("Saindo do sistema...");
                         exitSystem = true;
                         Console.ReadKey();
                         break;
                     default:
-                        Console.WriteLine($"A opção [{optionUser}] não está presente na lista de opções disponiveis...");
+                        Console.Clear();
+                        if (optionUser == "")
+                        {
+                            Console.WriteLine($"Erro: A opção não pode receber um valor vazio...");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Erro: A opção [{optionUser}] não está presente na lista de opções disponiveis...");
+                        }
+                        Console.ReadLine();
                         break;
                 }                 
             }
@@ -74,30 +84,31 @@ namespace BuyTickets.views
                 Console.WriteLine("=================================");
                 Console.WriteLine();
                 Console.WriteLine("[1]Ver voos cadastrados.\n[2]Cadastrar voo.\n[3]Editar voo.\n[4]Excluir voo.\n[5]Conta.\n[0]Sair da conta.");
-                var optionUser = Convert.ToInt32(Console.ReadLine());
+                var optionUser = Console.ReadLine();
+                
                 switch (optionUser)
                 {
-                    case 1:
+                    case "1":
                         Console.Clear();
                         _flightControllerView.SearchByEnterprise(enterprise);
                         Console.ReadKey();
                         break;
-                    case 2:
+                    case "2":
                         Console.Clear();
                         _flightControllerView.Create(enterprise);
                         Console.ReadKey();
                         break;
-                    case 3:
+                    case "3":
                         Console.Clear();
                         _flightControllerView.Update();
                         Console.ReadKey();
                         break;
-                    case 4:
+                    case "4":
                         Console.Clear();
                         _flightControllerView.Delete();
                         Console.ReadKey();
                         break;
-                    case 5:
+                    case "5":
                         while (backToMenu != false)
                         {
                             Console.Clear();
@@ -121,18 +132,26 @@ namespace BuyTickets.views
                             }
                         }
                         break;
-                    case 0:
+                    case "0":
                         Console.Clear();
                         Console.WriteLine("Voltando para o menu principal...");
                         exitAccount = true;
                         Console.ReadKey();
                         break;
                     default:
-                        Console.WriteLine($"A opção [{optionUser}] não está presente na lista de opções disponiveis...");
+                        Console.Clear();
+                        if (optionUser == "")
+                        {
+                            Console.WriteLine($"Erro: A opção não pode receber um valor vazio...");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"A opção [{optionUser}] não está presente na lista de opções disponiveis...");
+                        }
                         Console.ReadKey();
                         break;
                 }
-            }
+            } 
         }
     }
 }
