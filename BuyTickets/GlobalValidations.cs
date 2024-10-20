@@ -29,13 +29,18 @@ namespace BuyTickets
             bool isValidDate = DateTime.TryParseExact(date,"dd/MM/yyyy", cultureInfo, DateTimeStyles.None, out dateFormat);
             bool isValidDepartureTime = DateTime.TryParseExact(departureTimeWithDateInclude, "dd/MM/yyyy HH:mm", cultureInfo, DateTimeStyles.None, out departureTimeFormat);
             bool isValidArrivalTime = DateTime.TryParseExact(arrivalTimeWithDateInclude, "dd/MM/yyyy HH:mm", cultureInfo, DateTimeStyles.None, out arrivalTimeFormat);
-            // var contract = new Contract<Notification>().
+
+            //Verifica se a data informada é menor que a atual, se for menor vai ser retornado o valor True
+            //E será lançada uma notificação de erro caso o valor seja positivo;
+            bool dateInformedMinorCurrentDate = dateFormat < DateTime.Now;
+
             var contract = new Contract<Notification>().
                 Requires().
                 IsNotNullOrEmpty(origin, "Origem", "O local de origem nao pode ser vazio").
                 IsNotNullOrEmpty(destiny, "Destino", "O local de destino nao pode ser vazio").
                 IsNotNullOrEmpty(date, "Data", "A data do voo nao pode ser vazia").
                 IsTrue(isValidDate, "Data", "A data informada nao e uma data valida").
+                IsFalse(dateInformedMinorCurrentDate, "Data", "A data informada não poder ser menor que a data atual").
                 IsNotNullOrEmpty(departureTime, "Horario de saida", "O horario de saida nao pode ser vazio").
                 IsTrue(isValidDepartureTime, "Horario de saida", "O horario de saida informado nao segue a estrutura de um horario valida").
                 IsNotNullOrEmpty(arrivalTime, "Horario de chegada", "O horario de chegada nao pode ser vazio").
