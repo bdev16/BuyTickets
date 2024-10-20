@@ -22,9 +22,9 @@ namespace BuyTickets.views
 
         public void Create(Enterprise enterprise)
         {
-            Console.WriteLine("Informe o local de origem do voo: ");
+            Console.WriteLine("Informe o local de origem do voo: ");            
             var origin = Console.ReadLine();
-            Console.WriteLine("Informe o local de destino do voo: ");
+            Console.WriteLine("Informe o local de destino do voo: ");  
             var destiny = Console.ReadLine();
             Console.WriteLine("Informe a data do voo: ");
             var date = Console.ReadLine();
@@ -58,6 +58,7 @@ namespace BuyTickets.views
                 Console.Clear();
                 Flight flight = new Flight(origin, destiny, date, departureTime, arrivalTime, enterprise);
                 var result = _flightController.Create(flight);
+                enterprise.Flights.Add(flight);
                 Console.WriteLine($"Voo {result.Id} cadastrado com sucesso!!!");
                 Console.ReadKey();
             }
