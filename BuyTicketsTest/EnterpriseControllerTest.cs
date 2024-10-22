@@ -122,5 +122,26 @@ namespace BuyTicketsTest
 
             Assert.Null(enterpriseResultList);
         }
+
+        [Fact]
+        public void Check_MethodLogin_ReturnsCustomerCaseLoginSuccess()
+        {
+            // Arrange
+
+            List<Enterprise> enterprises = new List<Enterprise>();
+            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
+
+        
+            // Act
+
+            enterpriseController.Create(enterprise);
+
+            var loginResult = enterpriseController.Login(enterprise.Email, enterprise.Password);
+
+            // Assert
+
+            Assert.NotNull(loginResult);
+        }
     }
 }
