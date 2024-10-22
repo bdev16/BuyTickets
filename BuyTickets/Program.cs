@@ -6,7 +6,7 @@ using BuyTickets.views;
 List<Flight> flights = new List<Flight>();
 List<Enterprise> enterprises = new List<Enterprise>();
 
-Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
 enterprises.Add(enterprise);
 
 GlobalValidations globalValidations = new GlobalValidations();
