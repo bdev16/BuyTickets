@@ -63,7 +63,7 @@ namespace BuyTickets
             );
         }
 
-        public NotificationResult CreateEnterpriseValidate(string name, string email, string password)
+        public NotificationResult CreateEnterpriseValidate(string name, string email, string password, string cnpj)
         {
             Clear();
             var contract = new Contract<Notification>().
@@ -71,7 +71,8 @@ namespace BuyTickets
                 IsNotNullOrEmpty(name, "Nome", "O nome nao pode ser vazio").
                 IsNotNullOrEmpty(email, "Email", "O email nao pode ser vazio").
                 IsEmail(email, "Email", "O email informado nao e valido").
-                IsNotNullOrEmpty(password, "Senha", "A senha nao pode ser vazia");
+                IsNotNullOrEmpty(password, "Senha", "A senha nao pode ser vazia").
+                IsNotNullOrEmpty(cnpj, "Cnpj", "O Cnpj nao pode ser vazio");
                 
             AddNotifications(contract.Notifications);
             // var copyListNotifications = contract.Notifications;
