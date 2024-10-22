@@ -18,7 +18,7 @@ namespace BuyTicketsTest
             
             List<Flight> flights = new List<Flight>();
             FlightController flightController = new FlightController(flights);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
             Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
 
             //Act
@@ -39,7 +39,7 @@ namespace BuyTicketsTest
 
             List<Flight> flights = new List<Flight>();
             FlightController flightController = new FlightController(flights);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
             Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
 
             //Act
@@ -60,7 +60,7 @@ namespace BuyTicketsTest
 
                 List<Flight> flights = new List<Flight>();
                 FlightController flightController = new FlightController(flights);
-                Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+                Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
                 Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise); 
 
             //Act
@@ -81,7 +81,7 @@ namespace BuyTicketsTest
 
             List<Flight> flights = new List<Flight>();
             FlightController flightController = new FlightController(flights);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
             Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise); 
             Flight flight2 = new Flight("RECIFE", "SAO PAULO", "10/10/2024", "09:00", "11:00", enterprise); 
             Flight flight3 = new Flight("RECIFE", "RIO DE JANEIRO", "10/10/2024", "09:00", "11:00", enterprise); 
@@ -106,7 +106,7 @@ namespace BuyTicketsTest
 
             List<Flight> flights = new List<Flight>();
             FlightController flightController = new FlightController(flights);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
             Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
             Flight flightCopy = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
 
@@ -131,7 +131,7 @@ namespace BuyTicketsTest
             //Arrange
             List<Flight> flights = new List<Flight>();
             FlightController flightController = new FlightController(flights);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
             Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
 
             //Act
