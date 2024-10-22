@@ -72,7 +72,7 @@ namespace BuyTickets.Controllers
             var enterprise = _enterprises.FirstOrDefault(e => e.Id == enterpriseUpdate.Id);
             if (enterprise != null)
             {
-                enterprise.Name = enterpriseUpdate.Name;
+                enterprise.FullName = enterpriseUpdate.FullName;
                 return enterprise;
             }
             else
