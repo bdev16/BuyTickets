@@ -15,7 +15,7 @@ namespace BuyTickets.models
         public string Cpf { get { return cpf;} set { cpf = value; } }
         List<Flight> purchasedFlights;
 
-        public Customer(string fullName, string email, string password, string firstName, string lastName, string cpf) : base($"{firstName} {lastName}", email, password)
+        public Customer(string email, string password, string firstName, string lastName, string cpf) : base($"{firstName} {lastName}", email, password)
         {
             FirstName = firstName;
             LastName = lastName;
