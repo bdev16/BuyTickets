@@ -90,5 +90,34 @@ namespace BuyTickets
                 null
             );
         }
+
+        public NotificationResult CreateCustomerValidate(string firstName, string lastName, string email, string password, string cpf)
+        {
+            Clear();
+            var contract = new Contract<Notification>().
+                Requires().
+                IsNotNullOrEmpty(firstName, "Nome", "O nome nao pode ser vazio").
+                IsNotNullOrEmpty(lastName, "Sobrenome", "O sobrenome nao pode ser vazio").
+                IsNotNullOrEmpty(email, "Email", "O email nao pode ser vazio").
+                IsEmail(email, "Email", "O email informado nao e valido").
+                IsNotNullOrEmpty(password, "Senha", "A senha nao pode ser vazia").
+                IsNotNullOrEmpty(cpf, "Cpf", "O Cpf nao pode ser vazio");
+                
+            AddNotifications(contract.Notifications);
+            // var copyListNotifications = contract.Notifications;
+            if(!IsValid)
+            {
+                return new NotificationResult(
+                    false,
+                    "Alguns erros foram gerados",
+                    Notifications         
+                );  
+            }
+            return new NotificationResult(
+                true,
+                "Mensagem",
+                null
+            );
+        }
     }
 }
