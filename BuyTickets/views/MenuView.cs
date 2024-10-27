@@ -85,7 +85,7 @@ namespace BuyTickets.views
                 Console.WriteLine();
                 Console.WriteLine("[1]Ver voos cadastrados.\n[2]Cadastrar voo.\n[3]Editar voo.\n[4]Excluir voo.\n[5]Conta.\n[0]Sair da conta.");
                 var optionUser = Console.ReadLine();
-                
+                backToMenu = false;
                 switch (optionUser)
                 {
                     case "1":
@@ -109,26 +109,38 @@ namespace BuyTickets.views
                         Console.ReadKey();
                         break;
                     case "5":
-                        while (backToMenu != false)
+                        while (backToMenu != true)
                         {
                             Console.Clear();
                             Console.WriteLine("[1]Dados.\n[2]Editar dados.\n[0]Voltar");
-                            var optionUser2 = Convert.ToInt32(Console.ReadLine());
+                            var optionUser2 = Console.ReadLine();
                             switch (optionUser2)
                             {
-                                case 1:
+                                case "1":
                                     Console.Clear();
                                     _enterpriseControllerView.SearchById(enterprise);
                                     Console.ReadKey();
                                     break;
-                                case 2:
+                                case "2":
                                     Console.Clear();
                                     _enterpriseControllerView.Update(enterprise);
                                     Console.ReadKey();
                                     break;
-                                case 0:
+                                case "0":
                                     backToMenu = true;
                                     break;
+                                default:
+                                    Console.Clear();
+                                    if (optionUser2 == "")
+                                    {
+                                        Console.WriteLine($"Erro: A opção não pode receber um valor vazio...");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"A opção [{optionUser2}] não está presente na lista de opções disponiveis...");
+                                    }
+                                    Console.ReadKey();
+                                    break;             
                             }
                         }
                         break;
