@@ -13,7 +13,7 @@ namespace BuyTickets.models
         public string LastName { get { return lastName;} set { lastName = value; } }
         private string cpf;
         public string Cpf { get { return cpf;} set { cpf = value; } }
-        List<Flight> purchasedFlights;
+        public List<Flight> purchasedFlights { get; private set;}
 
         public Customer(string email, string password, string firstName, string lastName, string cpf) : base($"{firstName} {lastName}", email, password)
         {
