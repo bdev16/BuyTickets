@@ -26,6 +26,15 @@ namespace BuyTickets.Controllers
             return customer;
         }
 
+        public List<Flight> SearchAllFlights(Customer customer)
+        {
+            if ( customer.purchasedFlights.Count == 0)
+            {
+                return null;
+            }
+            return customer.purchasedFlights;
+        }
+
         public Customer SearchById(Guid idCustomer)
         {
             var resultSearchById = _customers.FirstOrDefault(c => c.Id == idCustomer);
