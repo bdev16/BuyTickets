@@ -86,6 +86,50 @@ namespace BuyTickets.Controllers
             }
         }
 
+        //Esse método vai buscar voos com base nos dados informados pelos usuarios
+        public IEnumerable<Flight> FlightFilter(string origin, string destiny, dynamic date)
+        {
+            IEnumerable<Flight> result;
+
+            if (origin != "" && destiny == "" && date == null)
+            {
+                result = _flights.Where(f => f.Origin == origin);
+                return result;
+            }
+
+            if (destiny != "" && origin == "" && date == null)
+            {
+                result = _flights.Where(f => f.Destiny == destiny);
+                return result;
+            }
+
+            if (date != null && origin == "" && destiny == "")
+            {
+                result = _flights.Where(f => f.Date == date);
+                return result;
+            }
+
+            if (origin != "" && date != null &&  destiny == "")
+            {
+                result = _flights.Where(f => f.Origin == origin && f.Date == date);
+                return result;
+            }
+
+            if (destiny != "" && date != null && origin == "")
+            {
+                result = _flights.Where(f => f.Destiny == destiny && f.Date == date);
+                return result;
+            }
+
+            if (origin == "" && destiny == "" && date == null)
+            {
+                result = _flights;
+                return result;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// It will modify the attributes of a Flight already present in the Flight List.
         /// </summary>
