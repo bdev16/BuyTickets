@@ -194,7 +194,7 @@ namespace BuyTickets.views
                 Console.WriteLine("            BuyFlights           ");
                 Console.WriteLine("=================================");
                 Console.WriteLine();
-                Console.WriteLine("[1]Ver voos.\n[2]Minhas Viagens.\n[3]Conta.\n[0]Sair da conta.");
+                Console.WriteLine("[1]Ver voos.\n[2]Minhas Viagens.\n[3]Pesquisar por Voos.\n[4]Comprar passagem.\n[5]Conta.\n[0]Sair da conta.");
                 var optionUser = Console.ReadLine();
                 backToMenu = false;
                 switch (optionUser)
@@ -215,6 +215,11 @@ namespace BuyTickets.views
                         Console.ReadKey();
                         break;
                     case "4":
+                        Console.Clear();
+                        _customerControllerView.BuyFlight(customer);
+                        Console.ReadKey();
+                        break;
+                    case "5":
                         while (backToMenu != true)
                         {
                             Console.Clear();
