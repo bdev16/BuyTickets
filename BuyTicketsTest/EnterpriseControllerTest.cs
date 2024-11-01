@@ -17,7 +17,7 @@ namespace BuyTicketsTest
             
             List<Enterprise> enterprises = new List<Enterprise>();
             EnterpriseController enterpriseController = new EnterpriseController(enterprises);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
 
             //Act
 
@@ -37,7 +37,7 @@ namespace BuyTicketsTest
 
             List<Enterprise> enterprises = new List<Enterprise>();
             EnterpriseController enterpriseController = new EnterpriseController(enterprises);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
 
             //Act
 
@@ -57,8 +57,8 @@ namespace BuyTicketsTest
 
             List<Enterprise> enterprises = new List<Enterprise>();
             EnterpriseController enterpriseController = new EnterpriseController(enterprises);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
-            Enterprise enterprise1 = new Enterprise("GOL", "golairlines@gmail.com", "gol123");
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
+            Enterprise enterprise1 = new Enterprise("GOL", "golairlines@gmail.com", "gol123", "30207900000790");
 
             //Act
 
@@ -79,14 +79,14 @@ namespace BuyTicketsTest
 
             List<Enterprise> enterprises = new List<Enterprise>();
             EnterpriseController enterpriseController = new EnterpriseController(enterprises);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
-            Enterprise enterpriseCopy = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
+            Enterprise enterpriseCopy = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
 
             //Act
 
             enterpriseController.Create(enterprise);
 
-            enterprise.Name = "LATAM AIRLINES";
+            enterprise.FullName = "LATAM AIRLINES";
 
             enterpriseController.Update(enterprise);
 
@@ -94,7 +94,7 @@ namespace BuyTicketsTest
 
             //Assert
 
-            Assert.NotEqual(enterpriseResultAfterUpdate.Name, enterpriseCopy.Name);
+            Assert.NotEqual(enterpriseResultAfterUpdate.FullName, enterpriseCopy.FullName);
             Assert.Equal(enterpriseResultAfterUpdate.Id, enterprise.Id);
         }
 
@@ -105,7 +105,7 @@ namespace BuyTicketsTest
 
             List<Enterprise> enterprises = new List<Enterprise>();
             EnterpriseController enterpriseController = new EnterpriseController(enterprises);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123");
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
 
 
             //Act
@@ -121,6 +121,27 @@ namespace BuyTicketsTest
             //Assert
 
             Assert.Null(enterpriseResultList);
+        }
+
+        [Fact]
+        public void Check_MethodLogin_ReturnsCustomerCaseLoginSuccess()
+        {
+            // Arrange
+
+            List<Enterprise> enterprises = new List<Enterprise>();
+            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
+
+        
+            // Act
+
+            enterpriseController.Create(enterprise);
+
+            var loginResult = enterpriseController.Login(enterprise.Email, enterprise.Password);
+
+            // Assert
+
+            Assert.NotNull(loginResult);
         }
     }
 }

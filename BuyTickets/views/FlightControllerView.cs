@@ -22,9 +22,9 @@ namespace BuyTickets.views
 
         public void Create(Enterprise enterprise)
         {
-            Console.WriteLine("Informe o local de origem do voo: ");
+            Console.WriteLine("Informe o local de origem do voo: ");            
             var origin = Console.ReadLine();
-            Console.WriteLine("Informe o local de destino do voo: ");
+            Console.WriteLine("Informe o local de destino do voo: ");  
             var destiny = Console.ReadLine();
             Console.WriteLine("Informe a data do voo: ");
             var date = Console.ReadLine();
@@ -58,6 +58,7 @@ namespace BuyTickets.views
                 Console.Clear();
                 Flight flight = new Flight(origin, destiny, date, departureTime, arrivalTime, enterprise);
                 var result = _flightController.Create(flight);
+                enterprise.Flights.Add(flight);
                 Console.WriteLine($"Voo {result.Id} cadastrado com sucesso!!!");
                 Console.ReadKey();
             }
@@ -75,8 +76,8 @@ namespace BuyTickets.views
             {
                 foreach (var flight in flightListResult)
                 {
-                    Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.Name};" +
-                                        $"\nOrigem: {flight.Origin}; Destino: {flight.Destiny}" +
+                    Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.FullName};" +
+                                        $"Origem: {flight.Origin}; Destino: {flight.Destiny}" +
                                         $"\nData: {flight.Date}; Saida: {flight.DepartureTime}; Chegada: {flight.ArrivalTime};" + 
                                         $"\nCodigo do Voo: {flight.Id}\n");
                 }
@@ -109,8 +110,8 @@ namespace BuyTickets.views
                 }
                 else
                 {
-                    Console.WriteLine($"Codigo Empresa: {flightResult.Enterprise.Id}; Empresa: {flightResult.Enterprise.Name};" +
-                                        $"\nOrigem: {flightResult.Origin}; Destino: {flightResult.Destiny}" +
+                    Console.WriteLine($"Codigo Empresa: {flightResult.Enterprise.Id}; Empresa: {flightResult.Enterprise.FullName};" +
+                                        $"Origem: {flightResult.Origin}; Destino: {flightResult.Destiny}" +
                                         $"\nData: {flightResult.Date}; Saida: {flightResult.DepartureTime}; Chegada: {flightResult.ArrivalTime};" + 
                                         $"\nCodigo do Voo: {flightResult.Id}\n");
                 }
@@ -142,8 +143,8 @@ namespace BuyTickets.views
             {
                 foreach (var flight in listEnterpriseFlightsResult)
                 {
-                    Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.Name};" +
-                                    $"\nOrigem: {flight.Origin}; Destino: {flight.Destiny}" +  
+                    Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.FullName};" +
+                                    $"Origem: {flight.Origin}; Destino: {flight.Destiny}" +  
                                     $"\nData: {flight.Date}; Saida: {flight.DepartureTime}; Chegada: {flight.ArrivalTime};" + 
                                     $"\nCodigo do Voo: {flight.Id}");
                 }

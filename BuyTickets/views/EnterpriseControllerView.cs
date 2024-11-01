@@ -27,9 +27,11 @@ namespace BuyTickets.views
             var email = Console.ReadLine();
             Console.WriteLine("Informe a senha");
             var password = Console.ReadLine();
+            Console.WriteLine("Informe o cnpj");
+            var cnpj = Console.ReadLine();
 
              //Utiliza o método CreateFlightValidations da classeglobalValidations para verificar se os dados informados pelo o usuarios são validos
-            var resultValidations = _globalValidations.CreateEnterpriseValidate(name, email, password);
+            var resultValidations = _globalValidations.CreateEnterpriseValidate(name, email, password, cnpj);
 
             //Tenta converter o atributo Data da classe NotificationResult para um Lista de notificações
             //Se a conversão for feita com sucesso vai ser retornada uma lista se não vai ser retornado um null
@@ -50,7 +52,7 @@ namespace BuyTickets.views
             }
             else
             {
-                Enterprise enterprise = new Enterprise(name, email, password);
+                Enterprise enterprise = new Enterprise(name, email, password, cnpj);
 
                 var result = _enterpriseController.Create(enterprise);
 
@@ -77,7 +79,7 @@ namespace BuyTickets.views
             {
                 foreach (var enterprise in enterpriseListResult)
                 {
-                    Console.WriteLine($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.Name};\n");
+                    Console.WriteLine($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.FullName};\n");
                 }
             }
         }
@@ -92,7 +94,7 @@ namespace BuyTickets.views
             }
             else
             {
-                Console.WriteLine($"Nome: {enterpriseResult.Name};\nEmail: {enterpriseResult.Email};\nSenha: {enterpriseResult.Password}");
+                Console.WriteLine($"Nome: {enterpriseResult.FullName};\nEmail: {enterpriseResult.Email};\nSenha: {enterpriseResult.Password}");
             }
         }
 
@@ -114,11 +116,11 @@ namespace BuyTickets.views
                 var name = Console.ReadLine();
                 if (name == "")
                 {
-                    enterprise.Name = enterprise.Name;
+                    enterprise.FullName = enterprise.FullName;
                 }
                 else
                 {
-                    enterpriseResult.Name = name;
+                    enterpriseResult.FullName = name;
                 }
                 Console.WriteLine("Informe o email: ");
                 var email = Console.ReadLine();

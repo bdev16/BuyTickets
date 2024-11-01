@@ -5,23 +5,15 @@ using System.Threading.Tasks;
 
 namespace BuyTickets.models
 {
-    public class Enterprise
+    public class Enterprise : User
     {
-        public Guid Id { get; private set; }
-        private string name;
-        public string Name { get { return name; } set { name = value; } }
-        private string email;
-        public string Email { get { return email;} set { email = value; } }
-        private string password;
-        public string Password { get { return password;} set { password = value; } }
+        private string cnpj;
+        public string Cnpj { get { return cnpj; } set { cnpj = value; } }
         public List<Flight> Flights { get; private set; }
 
-        public Enterprise(string name, string email, string password)
+        public Enterprise(string fullName, string email, string password, string cnpj) : base(fullName, email, password)
         {
-            Id = Guid.NewGuid();
-            Name = name;
-            Email = email;
-            Password = password;
+            Cnpj = cnpj;
             Flights = new List<Flight>();  
         }
     }
