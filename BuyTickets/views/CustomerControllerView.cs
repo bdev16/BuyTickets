@@ -11,11 +11,13 @@ namespace BuyTickets.views
     public class CustomerControllerView
     {
         private CustomerController _customerController;
+        private FlightController _flightController;
         private GlobalValidations _globalValidations;
 
-        public CustomerControllerView(CustomerController customerController, GlobalValidations globalValidations)
+        public CustomerControllerView(CustomerController customerController, FlightController flightController, GlobalValidations globalValidations)
         { 
             _customerController = customerController;
+            _flightController = flightController;
             _globalValidations = globalValidations;
         }
 
@@ -89,7 +91,6 @@ namespace BuyTickets.views
             }
         }
 
-
         public void SearchById(Customer customer)
         {
             var customerResult = _customerController.SearchById(customer.Id);
@@ -126,7 +127,7 @@ namespace BuyTickets.views
                 }
                 else
                 {
-                    customerResult.FirstName = firstName;
+                    customerResult.FirstName = firstName!;
                 }
                 var lastName = Console.ReadLine();
                 if (lastName == "")
@@ -135,7 +136,7 @@ namespace BuyTickets.views
                 }
                 else
                 {
-                    customerResult.LastName = lastName;
+                    customerResult.LastName = lastName!;
                 }
                 Console.WriteLine("Informe o email: ");
                 var email = Console.ReadLine();
@@ -145,7 +146,7 @@ namespace BuyTickets.views
                 }
                 else
                 {
-                    customerResult.Email = email;
+                    customerResult.Email = email!;
                 }
                 Console.WriteLine("Informe a senha");
                 var password = Console.ReadLine();
@@ -155,7 +156,7 @@ namespace BuyTickets.views
                 }
                 else
                 {
-                    customerResult.Password = password;
+                    customerResult.Password = password!;
                 }
                 
                 var customerUpdateResult = _customerController.Update(customerResult);
@@ -182,7 +183,7 @@ namespace BuyTickets.views
             {
                 var resultDeleteCustomer = _customerController.Delete(customerResult.Id);
 
-                if (resultDeleteCustomer == null)
+                if (!resultDeleteCustomer)
                 {
                     Console.WriteLine($"Ocorreu um erro ao tentar deletar o cliente informado...");
                 }
@@ -199,7 +200,7 @@ namespace BuyTickets.views
             var email = Console.ReadLine();
             Console.WriteLine("Informe a senha: ");
             var password = Console.ReadLine();
-            var loginResult = _customerController.Login(email, password);
+            var loginResult = _customerController.Login(email!, password!);
 
             if (loginResult == null)
             {
@@ -208,6 +209,55 @@ namespace BuyTickets.views
             else
             {
                 menuView.CustomerMenu(loginResult);
+            }
+        }
+
+        public void BuyFlight(Customer customer)
+        {
+            Console.WriteLine("Informe o ID do Voo: ");
+            var idInformed = Console.ReadLine();
+            if (!Guid.TryParse(idInformed, out Guid id))
+            {
+                throw new Exception();
+            }
+            else
+            {
+                var idFlight = Guid.Parse(idInformed);
+                var resultSearchById = _flightController.SearchById(idFlight);
+                if (resultSearchById == null)
+                {
+                    Console.WriteLine("O Voo informado não existe no sistema...");
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Informe o seu nome: ");
+                    var name = Console.ReadLine();
+                    Console.WriteLine("Informe o seu sobrenome: ");
+                    var lastName = Console.ReadLine();
+                    Console.WriteLine("Informe seu CPF: ");
+                    var cpf = Console.ReadLine();
+
+                    bool confirmBuy = false;
+                    Console.Clear();
+                    Console.WriteLine("Deseja confirmar a compra?([1]Sim; [2]Não;)");
+                    var option = Console.ReadLine();
+                    switch (option)
+                    {
+                        case "1":
+                            confirmBuy = true;
+                            Console.WriteLine("Compra efetuada com sucesso!!!");
+                            customer.purchasedFlights.Add(resultSearchById);
+                            Console.ReadLine();
+                            break;
+                        case "2":
+                            confirmBuy = false;
+                            break;
+                        default:
+                            Console.Write($"O valor informado [{option}] não está entre as opções disponiveis...");
+                            break;
+                    }
+                }
             }
         }
     }

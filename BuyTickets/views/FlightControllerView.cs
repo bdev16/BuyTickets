@@ -160,7 +160,7 @@ namespace BuyTickets.views
                 Console.WriteLine("Informe o local de destino do voo(ou deixe em branco para nulo): ");  
                 var destiny = Console.ReadLine();
                 Console.WriteLine("Informe a data do voo(ou deixe em branco para nulo): ");
-                string date = Console.ReadLine();
+                string? date = Console.ReadLine();
 
                 DateTime dateTime;
 
@@ -347,7 +347,7 @@ namespace BuyTickets.views
                 {
                     var resultDeleteFlight = _flightController.Delete(flightResult.Id);
 
-                    if (resultDeleteFlight == null)
+                    if (!resultDeleteFlight)
                     {
                         Console.WriteLine($"Ocorreu um erro ao tentar deletar o voo informado...");
                     }
