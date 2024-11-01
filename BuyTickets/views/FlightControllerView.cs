@@ -151,6 +151,55 @@ namespace BuyTickets.views
             }
         }
 
+         public void FlightFilter()
+        {
+            try
+            {
+                Console.WriteLine("Informe o local de origem do voo(ou deixe em branco para nulo): ");            
+                var origin = Console.ReadLine();
+                Console.WriteLine("Informe o local de destino do voo(ou deixe em branco para nulo): ");  
+                var destiny = Console.ReadLine();
+                Console.WriteLine("Informe a data do voo(ou deixe em branco para nulo): ");
+                string date = Console.ReadLine();
+
+                DateTime dateTime;
+
+                if (!DateTime.TryParse(date, out dateTime) && date != "")
+                {
+                    throw new Exception();
+                }
+                else
+                {
+
+                    DateTime? dateConvert = null;
+
+                    if (date != "")
+                    {
+                        dateConvert = DateTime.Parse(date);
+                    }
+                    var resultFilter = _flightController.FlightFilter(origin, destiny, dateConvert);
+                    if (resultFilter == null)
+                    {
+                        Console.WriteLine("Não existe nenhum voo com os dados informados...");
+                    }
+                    else
+                    {
+                        foreach (var flight in resultFilter)
+                        {
+                             Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.FullName};" +
+                                    $"Origem: {flight.Origin}; Destino: {flight.Destiny}" +  
+                                    $"\nData: {flight.Date}; Saida: {flight.DepartureTime}; Chegada: {flight.ArrivalTime};" + 
+                                    $"\nCodigo do Voo: {flight.Id}\n");
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Erro: A data informada não é uma data valida");
+            }
+        }
+
         public void Update()
         {
             //A variavel flightInformad está sendo criada fora do escopo do Try para poder ser utilizada pelo Catch
