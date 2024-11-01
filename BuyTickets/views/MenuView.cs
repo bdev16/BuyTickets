@@ -91,7 +91,7 @@ namespace BuyTickets.views
         public void EnterpriseMenu(Enterprise enterprise)
         {
             bool exitAccount = false;
-
+            bool backToMenu = false;
             while (exitAccount != true)
             {
                 Console.Clear();
@@ -211,7 +211,7 @@ namespace BuyTickets.views
                         break;
                     case "3":
                         Console.Clear();
-                        
+                        _flightControllerView.FlightFilter();
                         Console.ReadKey();
                         break;
                     case "4":
