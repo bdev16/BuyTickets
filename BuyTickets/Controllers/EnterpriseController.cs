@@ -63,6 +63,15 @@ namespace BuyTickets.Controllers
             }
         }
 
+        public IEnumerable<Flight> SearchAllFlights(Enterprise enterprise)
+        {
+             if (enterprise.Flights.Count == 0)
+            {
+                return null;
+            }
+            return enterprise.Flights;
+        }
+
         /// <summary>
         /// It will modify the attributes of a Enterprise already present in the Enterprise List.
         /// </summary>
