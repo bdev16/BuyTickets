@@ -119,7 +119,7 @@ namespace BuyTickets.views
                 //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
                 Console.WriteLine("Os dados informados vão modificar os dados existente de cliente...");
                 Console.ReadKey();
-                Console.WriteLine("Informe o seu nome: ");
+                Console.WriteLine("Informe o seu nome(ou deixe em branco para nulo): ");
                 var firstName = Console.ReadLine();
                 if (firstName == "")
                 {
@@ -129,6 +129,7 @@ namespace BuyTickets.views
                 {
                     customerResult.FirstName = firstName!;
                 }
+                Console.WriteLine("Informe o seu sobrenome(ou deixe em branco para nulo): ");
                 var lastName = Console.ReadLine();
                 if (lastName == "")
                 {
@@ -138,7 +139,7 @@ namespace BuyTickets.views
                 {
                     customerResult.LastName = lastName!;
                 }
-                Console.WriteLine("Informe o email: ");
+                Console.WriteLine("Informe o email(ou deixe em branco para nulo): ");
                 var email = Console.ReadLine();
                 if (email == "")
                 {
@@ -148,7 +149,7 @@ namespace BuyTickets.views
                 {
                     customerResult.Email = email!;
                 }
-                Console.WriteLine("Informe a senha");
+                Console.WriteLine("Informe a senha(ou deixe em branco para nulo):");
                 var password = Console.ReadLine();
                 if (password == "")
                 {
@@ -252,6 +253,8 @@ namespace BuyTickets.views
                             break;
                         case "2":
                             confirmBuy = false;
+                            Console.WriteLine("Compra cancelada com sucesso!!!");
+                            Console.ReadLine();
                             break;
                         default:
                             Console.Write($"O valor informado [{option}] não está entre as opções disponiveis...");

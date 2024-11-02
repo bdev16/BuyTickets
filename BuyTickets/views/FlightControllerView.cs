@@ -144,7 +144,7 @@ namespace BuyTickets.views
                 foreach (var flight in listEnterpriseFlightsResult)
                 {
                     Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.FullName};" +
-                                    $"Origem: {flight.Origin}; Destino: {flight.Destiny}" +  
+                                    $"\nOrigem: {flight.Origin}; Destino: {flight.Destiny}" +  
                                     $"\nData: {flight.Date}; Saida: {flight.DepartureTime}; Chegada: {flight.ArrivalTime};" + 
                                     $"\nCodigo do Voo: {flight.Id}");
                 }
@@ -233,7 +233,7 @@ namespace BuyTickets.views
                 else
                 {
                     Console.WriteLine("Os dados informados vão modificar os dados do voo existente.");
-                    Console.WriteLine("Informe o local de origem do voo: ");
+                    Console.WriteLine("Informe o local de origem do voo(ou deixe em branco para nulo): ");
                     //O codigo abaixo, cria uma variavel de verificação que ao receber um valor qualquer do usuario
                     //Caso o valor informado pelo usuario for vazio, o atributo em questão de empresa vai receber o valor atual dele sem altera-lo
                     //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
@@ -246,7 +246,7 @@ namespace BuyTickets.views
                     {
                         flightResult.Origin = origin!;
                     }
-                    Console.WriteLine("Informe o local de destino do voo: ");
+                    Console.WriteLine("Informe o local de destino do voo(ou deixe em branco para nulo): ");
                     var destiny = Console.ReadLine();
                     if (destiny == "")
                     {
@@ -256,7 +256,7 @@ namespace BuyTickets.views
                     {
                         flightResult.Destiny= destiny!;
                     }
-                    Console.WriteLine("Informe a data do voo: ");
+                    Console.WriteLine("Informe a data do voo(ou deixe em branco para nulo): ");
                     var date = Console.ReadLine();
                     if (date == "")
                     {
@@ -266,7 +266,7 @@ namespace BuyTickets.views
                     {
                         flightResult.Date = DateTime.Parse(date!);
                     }
-                    Console.WriteLine("Informe a hora de saida do voo: ");
+                    Console.WriteLine("Informe a hora de saida do voo(ou deixe em branco para nulo): ");
                     var departureTime = Console.ReadLine();
                     if (date == "")
                     {
@@ -276,7 +276,7 @@ namespace BuyTickets.views
                     {
                         flightResult.DepartureTime = DateTime.Parse(departureTime!);
                     }
-                    Console.WriteLine("Informe a hora de chegada do voo: ");
+                    Console.WriteLine("Informe a hora de chegada do voo(ou deixe em branco para nulo): ");
                     var arrivalTime = Console.ReadLine();
                     if (date == "")
                     {

@@ -112,7 +112,7 @@ namespace BuyTickets.views
                 //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
                 Console.WriteLine("Os dados informados vão modificar os dados existente de empresa...");
                 Console.ReadKey();
-                Console.WriteLine("Informe o nome da empresa: ");
+                Console.WriteLine("Informe o nome da empresa(ou deixe em branco para nulo): ");
                 var name = Console.ReadLine();
                 if (name == "")
                 {
@@ -122,7 +122,7 @@ namespace BuyTickets.views
                 {
                     enterpriseResult.FullName = name;
                 }
-                Console.WriteLine("Informe o email: ");
+                Console.WriteLine("Informe o email(ou deixe em branco para nulo): ");
                 var email = Console.ReadLine();
                 if (email == "")
                 {
@@ -132,7 +132,7 @@ namespace BuyTickets.views
                 {
                     enterprise.Email = email;
                 }
-                Console.WriteLine("Informe a senha");
+                Console.WriteLine("Informe a senha(ou deixe em branco para nulo):");
                 var password = Console.ReadLine();
                 if (password == "")
                 {

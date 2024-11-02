@@ -43,9 +43,11 @@ namespace BuyTickets.views
                         switch(optionUser2)
                         {
                             case "1":
+                                Console.Clear();
                                 _enterpriseControllerView.Login(menuView);
                                 break;
                             case "2":
+                                Console.Clear();
                                 _enterpriseControllerView.Create();
                                 break;
                         }
@@ -58,9 +60,11 @@ namespace BuyTickets.views
                         switch(optionUser3)
                         {
                             case "1":
+                                Console.Clear();
                                 _customerControllerView.Login(menuView);
                                 break;
                             case "2":
+                                Console.Clear();
                                 _customerControllerView.Create();
                                 break;
                         }
