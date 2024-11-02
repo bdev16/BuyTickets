@@ -98,6 +98,26 @@ namespace BuyTickets.views
             }
         }
 
+        public void SearchAllFlights(Enterprise enterprise)
+        {
+            var enterpriseListResult = _enterpriseController.SearchAllFlights(enterprise);
+
+            if (enterpriseListResult == null)
+            {
+                Console.WriteLine("Nenhum voo foi adquirido até o momento...");
+            }
+            else
+            {
+                foreach (var flight in enterpriseListResult)
+                {
+                    Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.FullName};" +
+                                        $"Origem: {flight.Origin}; Destino: {flight.Destiny}" +
+                                        $"\nData: {flight.Date}; Saida: {flight.DepartureTime}; Chegada: {flight.ArrivalTime};" + 
+                                        $"\nCodigo do Voo: {flight.Id}\n");
+                }
+            }
+        }
+
         public void Update(Enterprise enterprise)
         {
             var enterpriseResult = _enterpriseController.SearchById(enterprise.Id);
