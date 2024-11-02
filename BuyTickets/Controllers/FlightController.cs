@@ -71,20 +71,20 @@ namespace BuyTickets.Controllers
         /// </summary>
         /// <param name="enterprise">Will receive a Enterprise object which will represent the Enterprise class.</param>
         /// <returns>Will returning the list  class</returns>
-        public IEnumerable<Flight> SearchByEnterprise(Enterprise enterprise)
-        {
-            var flightForEnterprise = from f in _flights
-                                      where f.Enterprise == enterprise
-                                      select f;
-            if (flightForEnterprise == null)
-            {
-                return null;
-            }
-            else
-            {
-                return flightForEnterprise;
-            }
-        }
+        // public IEnumerable<Flight> SearchByEnterprise(Enterprise enterprise)
+        // {
+        //     var flightForEnterprise = from f in _flights
+        //                               where f.Enterprise == enterprise
+        //                               select f;
+        //     if (flightForEnterprise == null)
+        //     {
+        //         return null;
+        //     }
+        //     else
+        //     {
+        //         return flightForEnterprise;
+        //     }
+        // }
 
         //Esse método vai buscar voos com base nos dados informados pelos usuarios
         public IEnumerable<Flight> FlightFilter(string origin, string destiny, dynamic date)

@@ -110,7 +110,7 @@ namespace BuyTickets.views
                 {
                     case "1":
                         Console.Clear();
-                        _flightControllerView.SearchByEnterprise(enterprise);
+                        _enterpriseControllerView.SearchAllFlights(enterprise);
                         Console.ReadKey();
                         break;
                     case "2":
