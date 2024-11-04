@@ -5,45 +5,34 @@ using BuyTickets.views;
 
 List<Flight> flights = new List<Flight>();
 List<Enterprise> enterprises = new List<Enterprise>();
+List<Customer> customers = new List<Customer>();
 
 Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
 enterprises.Add(enterprise);
+
+List<Flight> flightList = new List<Flight>
+{
+    new Flight("São Paulo", "Rio de Janeiro", "2024-11-10", "08:00", "10:00", enterprise),
+    new Flight("Belo Horizonte", "Salvador", "2024-11-11", "14:00", "16:30", enterprise),
+    new Flight("Curitiba", "Florianópolis", "2024-11-12", "09:30", "11:00", enterprise),
+    new Flight("Brasília", "Fortaleza", "2024-11-13", "18:00", "20:30", enterprise),
+    new Flight("Manaus", "Belém", "2024-11-14", "12:00", "14:00", enterprise),
+};
+
+flights = flightList;
+
+Customer customer = new Customer("emailvalido@gmail.com", "cliente123", "Bruno", "Antonio", "56097045080");
+customers.Add(customer);
 
 GlobalValidations globalValidations = new GlobalValidations();
 EnterpriseController enterpriseController = new EnterpriseController(enterprises);
 EnterpriseControllerView enterpriseControllerView = new EnterpriseControllerView(enterpriseController, globalValidations);
 FlightController flightController = new FlightController(flights);
 FlightControllerView flightControllerView = new FlightControllerView(flightController, globalValidations);
+CustomerController customerController= new CustomerController(customers);
+CustomerControllerView customerControllerView = new CustomerControllerView(customerController,flightController, globalValidations);
 
-MenuView menuView = new MenuView(flightControllerView, enterpriseControllerView);
-
-DateTime formatData2 = new DateTime();
-
-DateTime formatData;
-
-bool result = DateTime.TryParse("sdadsada", out formatData);
-
-Console.WriteLine($"Formato de data: {result}, Formato de data: {formatData2}");
-
-DateTime date = DateTime.Now;
-
-string departureTime = "08:00:00";
-string arrivalTime = "09:00:00";
-
-string stringDate = $"{date}";
-
-DateTime Date = DateTime.Parse(stringDate);
-//Abaixo são criadas variaveis secundarias que vão servir para capturar
-//Somente a parte da data sem utilizar o horario e utiliza-lá para montar
-//Adicionar nas variaveis departureTime e arrivalTime
-var dateInformed = stringDate.Split(' ');
-var dateCaptured = dateInformed[0];
-var departureTimeWithDateInclude = $"{dateCaptured} {departureTime}";
-var arrivalTimeWithDateInclude = $"{dateCaptured} {arrivalTime}";
-
-Console.WriteLine($"Data: {Date}; Horario de saida: {departureTimeWithDateInclude}, Horario de chegada: {arrivalTimeWithDateInclude}");
-
-Console.ReadKey();
+MenuView menuView = new MenuView(flightControllerView, enterpriseControllerView, customerControllerView);
 
 menuView.MainMenu(menuView);
 // menuView.EnterpriseMenu(enterprise);
