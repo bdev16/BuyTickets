@@ -149,6 +149,7 @@ namespace BuyTickets.Controllers
             flight.DepartureTime = flightUpdate.DepartureTime;
             flight.ArrivalTime = flightUpdate.ArrivalTime;
             flight.Enterprise = flightUpdate.Enterprise;
+            flight.registeredCustomers = flight.registeredCustomers;
             return flight;
         }
 
