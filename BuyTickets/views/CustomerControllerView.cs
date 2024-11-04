@@ -251,6 +251,8 @@ namespace BuyTickets.views
                                 confirmBuy = true;
                                 Console.WriteLine("Compra efetuada com sucesso!!!");
                                 customer.purchasedFlights.Add(resultSearchById);
+                                resultSearchById.registeredCustomers.Add(customer);
+                                _flightController.Update(resultSearchById);
                                 Console.ReadLine();
                                 break;
                             case "2":
