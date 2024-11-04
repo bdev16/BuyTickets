@@ -131,6 +131,58 @@ namespace BuyTickets.views
             }   
         }
 
+        public void SearchByIdWithCustomers()
+        {
+            var flightInformed = "";
+            try
+            {
+                Guid guidFormat;
+                var flightId = new Guid();
+                Console.WriteLine("Informe o ID do voo desejado: ");
+                flightInformed = Console.ReadLine();
+                if (Guid.TryParse(flightInformed, out guidFormat))
+                {
+                    flightId = Guid.Parse(flightInformed);
+                } 
+                else
+                {
+                    throw new Exception();
+                }
+
+                var flightResult = _flightController.SearchById(flightId);
+
+                if (flightResult == null)
+                {
+                    Console.WriteLine("Voo não encontrado...");
+                }
+                else
+                {
+                    Console.WriteLine($"Codigo Empresa: {flightResult.Enterprise.Id}; Empresa: {flightResult.Enterprise.FullName};" +
+                                        $"Origem: {flightResult.Origin}; Destino: {flightResult.Destiny}" +
+                                        $"\nData: {flightResult.Date}; Saida: {flightResult.DepartureTime}; Chegada: {flightResult.ArrivalTime};" + 
+                                        $"\nCodigo do Voo: {flightResult.Id}\nPassageiros: [");
+                    foreach(var customer in flightResult.registeredCustomers)
+                    {
+                        Console.WriteLine($"Nome: {customer.FullName};Cpf: {customer.Cpf}Email: {customer.Email}");
+                        Console.WriteLine("];");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                if (flightInformed == "")
+                {
+                    Console.Clear();
+                    Console.WriteLine("Erro: O ID informado não pode ser um valor vazio...");
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Erro: O valor do ID informado não corresponde ao padrão existente...");
+                }
+            }   
+        }
+
         // public void SearchByEnterprise(Enterprise enterprise)
         // {
         //     var listEnterpriseFlightsResult = _flightController.SearchByEnterprise(enterprise);
