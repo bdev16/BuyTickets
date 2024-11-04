@@ -215,52 +215,59 @@ namespace BuyTickets.views
 
         public void BuyFlight(Customer customer)
         {
-            Console.WriteLine("Informe o ID do Voo: ");
-            var idInformed = Console.ReadLine();
-            if (!Guid.TryParse(idInformed, out Guid id))
+            try
             {
-                throw new Exception();
-            }
-            else
-            {
-                var idFlight = Guid.Parse(idInformed);
-                var resultSearchById = _flightController.SearchById(idFlight);
-                if (resultSearchById == null)
+                Console.WriteLine("Informe o ID do Voo: ");
+                var idInformed = Console.ReadLine();
+                if (!Guid.TryParse(idInformed, out Guid id))
                 {
-                    Console.WriteLine("O Voo informado não existe no sistema...");
+                    throw new Exception();
                 }
                 else
                 {
-                    Console.Clear();
-                    Console.WriteLine("Informe o seu nome: ");
-                    var name = Console.ReadLine();
-                    Console.WriteLine("Informe o seu sobrenome: ");
-                    var lastName = Console.ReadLine();
-                    Console.WriteLine("Informe seu CPF: ");
-                    var cpf = Console.ReadLine();
-
-                    bool confirmBuy = false;
-                    Console.Clear();
-                    Console.WriteLine("Deseja confirmar a compra?([1]Sim; [2]Não;)");
-                    var option = Console.ReadLine();
-                    switch (option)
+                    var idFlight = Guid.Parse(idInformed);
+                    var resultSearchById = _flightController.SearchById(idFlight);
+                    if (resultSearchById == null)
                     {
-                        case "1":
-                            confirmBuy = true;
-                            Console.WriteLine("Compra efetuada com sucesso!!!");
-                            customer.purchasedFlights.Add(resultSearchById);
-                            Console.ReadLine();
-                            break;
-                        case "2":
-                            confirmBuy = false;
-                            Console.WriteLine("Compra cancelada com sucesso!!!");
-                            Console.ReadLine();
-                            break;
-                        default:
-                            Console.Write($"O valor informado [{option}] não está entre as opções disponiveis...");
-                            break;
+                        Console.WriteLine("O Voo informado não existe no sistema...");
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Informe o seu nome: ");
+                        var name = Console.ReadLine();
+                        Console.WriteLine("Informe o seu sobrenome: ");
+                        var lastName = Console.ReadLine();
+                        Console.WriteLine("Informe seu CPF: ");
+                        var cpf = Console.ReadLine();
+
+                        bool confirmBuy = false;
+                        Console.Clear();
+                        Console.WriteLine("Deseja confirmar a compra?([1]Sim; [2]Não;)");
+                        var option = Console.ReadLine();
+                        switch (option)
+                        {
+                            case "1":
+                                confirmBuy = true;
+                                Console.WriteLine("Compra efetuada com sucesso!!!");
+                                customer.purchasedFlights.Add(resultSearchById);
+                                Console.ReadLine();
+                                break;
+                            case "2":
+                                confirmBuy = false;
+                                Console.WriteLine("Compra cancelada com sucesso!!!");
+                                Console.ReadLine();
+                                break;
+                            default:
+                                Console.Write($"O valor informado [{option}] não está entre as opções disponiveis...");
+                                break;
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Erro: O valor passado não é um ID valido...");
             }
         }
     }
