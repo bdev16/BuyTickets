@@ -20,7 +20,8 @@ namespace BuyTickets.models
         public DateTime ArrivalTime  { get { return arrivalTime; } set { arrivalTime = value; } }
         private Enterprise enterprise;
         public Enterprise Enterprise{ get { return enterprise; } set { enterprise = value; } }
-        List<Customer> registeredCustomers;
+        private List<Customer> customers;
+        public List<Customer> registeredCustomers { get { return customers; } set{ customers = value; } }
         public Flight(string origin, string destiny, string date, string departureTime, string arrivalTime, Enterprise enterprise)
         {
             Id = Guid.NewGuid();
