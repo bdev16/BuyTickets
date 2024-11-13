@@ -17,8 +17,8 @@ namespace BuyTickets.models
 
         public Customer(string email, string password, string firstName, string lastName, string cpf) : base($"{firstName} {lastName}", email, password)
         {
-            FirstName = firstName;
-            LastName = lastName;
+            FirstName = firstName.ToUpper();
+            LastName = lastName.ToUpper();
             Cpf = cpf;
             purchasedFlights = new List<Flight>();
         }
