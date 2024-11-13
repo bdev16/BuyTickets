@@ -16,5 +16,11 @@ namespace BuyTickets.models
             Cnpj = cnpj;
             Flights = new List<Flight>();  
         }
+
+        public Enterprise(string fullName, string email, string password, string cnpj, List<Flight> flightsList) : base(fullName, email, password)
+        {
+            Cnpj = cnpj;
+            Flights = flightsList;
+        }
     }
 }
