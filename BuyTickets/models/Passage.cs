@@ -23,9 +23,9 @@ namespace BuyTickets.models
         public Passage(string customerName, string customerFirstName, string customerLastName, string customerCpf, Flight purchasedFlight, Customer buyer)
         {
             Id = new Guid();
-            CustomerName = customerName;
-            CustomerFirstName = customerFirstName;
-            CustomerLastName = customerLastName;
+            CustomerName = customerName.ToUpper();
+            CustomerFirstName = customerFirstName.ToUpper();
+            CustomerLastName = customerLastName.ToUpper();
             CustomerCpf = customerCpf;
             PurchasedFlight = purchasedFlight;
             Buyer = buyer;
