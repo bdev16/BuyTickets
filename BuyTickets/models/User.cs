@@ -18,7 +18,7 @@ namespace BuyTickets.models
         public User (string fullName, string email, string password)
         {
             Id = Guid.NewGuid();
-            FullName = fullName;
+            FullName = fullName.ToUpper();
             Email = email;
             Password = password;
         }
