@@ -13,11 +13,13 @@ namespace BuyTickets.views
     {
         private FlightController _flightController;
         private GlobalValidations _globalValidations;
+        private List<Airport> _airports;
 
-        public FlightControllerView(FlightController flightController, GlobalValidations globalValidations)
+        public FlightControllerView(FlightController flightController, GlobalValidations globalValidations, List<Airport> airports) 
         {
             _flightController = flightController;
             _globalValidations = globalValidations;
+            _airports = airports;
         }
 
         public void Create(Enterprise enterprise)
@@ -34,7 +36,7 @@ namespace BuyTickets.views
             var arrivalTime = Console.ReadLine();
 
             //Utiliza o método CreateFlightValidations da classeglobalValidations para verificar se os dados informados pelo o usuarios são validos
-            var resultValidations = _globalValidations.CreateFlightValidate(origin, destiny, date, departureTime, arrivalTime);
+            var resultValidations = _globalValidations.CreateFlightValidate(origin, destiny, date, departureTime, arrivalTime, _airports);
 
             //Tenta converter o atributo Data da classe NotificationResult para um Lista de notificações
             //Se a conversão for feita com sucesso vai ser retornada uma lista se não vai ser retornado um null
@@ -56,7 +58,9 @@ namespace BuyTickets.views
             else
             {
                 Console.Clear();
-                Flight flight = new Flight(origin, destiny, date, departureTime, arrivalTime, enterprise);
+                var airportOrigin = _airports.FirstOrDefault(a => a.City == origin.ToUpper());
+                var airportDestiny = _airports.FirstOrDefault(a => a.City == destiny.ToUpper());
+                Flight flight = new Flight(airportOrigin.Name, airportDestiny.Name, date, departureTime, arrivalTime, enterprise);
                 var result = _flightController.Create(flight);
                 enterprise.Flights.Add(flight);
                 Console.WriteLine($"Voo {result.Id} cadastrado com sucesso!!!");
@@ -236,6 +240,7 @@ namespace BuyTickets.views
                     }
                     else
                     {
+                        Console.Clear();
                         foreach (var flight in resultFilter)
                         {
                              Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.FullName};" +
