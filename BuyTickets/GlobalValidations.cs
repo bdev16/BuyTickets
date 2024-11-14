@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using BuyTickets.models;
 using Flunt.Notifications;
 using Flunt.Validations;
 
@@ -10,10 +11,15 @@ namespace BuyTickets
 {
     public class GlobalValidations : Notifiable<Notification>
     {
-        public NotificationResult CreateFlightValidate(string origin, string destiny, string date, string departureTime, string arrivalTime)
+        public NotificationResult CreateFlightValidate(string origin, string destiny, string date, string departureTime, string arrivalTime, List<Airport> airports)
         {
             //O metodo Clear limpa todas as notificações que foram geradas e adicionadas em Notifiable
             Clear();
+
+            // Vai verificar se na lista de airports que foi recebidas existe os valores de aeroportos informados pelo usuario
+            var existOriginAirport = airports.FirstOrDefault(a => a.City == origin.ToUpper());
+            var existDestinyAirport = airports.FirstOrDefault(a => a.City == destiny.ToUpper());
+            
             //Cria uma variavel do tipo DateTime que vai servir como uma referencia para verificar se os dados informados pelos
             //usuarios vão estar de acordo com o tipo DateTime
             DateTime dateFormat, departureTimeFormat, arrivalTimeFormat;
@@ -38,6 +44,8 @@ namespace BuyTickets
                 Requires().
                 IsNotNullOrEmpty(origin, "Origem", "O local de origem nao pode ser vazio").
                 IsNotNullOrEmpty(destiny, "Destino", "O local de destino nao pode ser vazio").
+                IsNotNull(existOriginAirport, "Origem", "O local de origem nao e um aeroporto existente").
+                IsNotNull(existDestinyAirport, "Destino", "O local de destino nao e um aeroporto existente").
                 IsNotNullOrEmpty(date, "Data", "A data do voo nao pode ser vazia").
                 IsTrue(isValidDate, "Data", "A data informada nao e uma data valida").
                 IsFalse(dateInformedMinorCurrentDate, "Data", "A data informada não poder ser menor que a data atual").
