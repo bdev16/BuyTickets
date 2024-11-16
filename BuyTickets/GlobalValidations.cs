@@ -16,7 +16,7 @@ namespace BuyTickets
             //O metodo Clear limpa todas as notificações que foram geradas e adicionadas em Notifiable
             Clear();
 
-            // Vai verificar se na lista de airports que foi recebidas existe os valores de aeroportos informados pelo usuario
+            // Essas variaveis vão ser utilizadas para verificar se na lista de airports que foi recebidas existe os valores de aeroportos informados pelo usuario
             var existOriginAirport = airports.FirstOrDefault(a => a.City == origin.ToUpper());
             var existDestinyAirport = airports.FirstOrDefault(a => a.City == destiny.ToUpper());
             
@@ -53,7 +53,6 @@ namespace BuyTickets
                 IsTrue(isValidDepartureTime, "Horario de saida", "O horario de saida informado nao segue a estrutura de um horario valida").
                 IsNotNullOrEmpty(arrivalTime, "Horario de chegada", "O horario de chegada nao pode ser vazio").
                 IsTrue(isValidArrivalTime, "Horario de chegada", "O horario de chegada informado nao segue a estrutura de um horario valida");
-            
             AddNotifications(contract);
 
             if(!IsValid)
@@ -83,7 +82,7 @@ namespace BuyTickets
                 IsNotNullOrEmpty(cnpj, "Cnpj", "O Cnpj nao pode ser vazio");
                 
             AddNotifications(contract.Notifications);
-            // var copyListNotifications = contract.Notifications;
+
             if(!IsValid)
             {
                 return new NotificationResult(
@@ -112,7 +111,7 @@ namespace BuyTickets
                 IsNotNullOrEmpty(cpf, "Cpf", "O Cpf nao pode ser vazio");
                 
             AddNotifications(contract.Notifications);
-            // var copyListNotifications = contract.Notifications;
+
             if(!IsValid)
             {
                 return new NotificationResult(

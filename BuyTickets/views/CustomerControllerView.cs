@@ -49,7 +49,7 @@ namespace BuyTickets.views
                 {
                     foreach(var result in listNotification)
                     {
-                        Console.WriteLine($"    - {result.Message}");
+                        Console.WriteLine($" - {result.Message}");
                     }
                 }
                 Console.ReadKey();

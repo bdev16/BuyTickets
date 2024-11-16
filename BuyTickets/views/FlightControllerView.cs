@@ -187,26 +187,6 @@ namespace BuyTickets.views
             }   
         }
 
-        // public void SearchByEnterprise(Enterprise enterprise)
-        // {
-        //     var listEnterpriseFlightsResult = _flightController.SearchByEnterprise(enterprise);
-
-        //     if (listEnterpriseFlightsResult == null)
-        //     {
-        //         Console.WriteLine("Sem voos cadastrados no momento");
-        //     }
-        //     else
-        //     {
-        //         foreach (var flight in listEnterpriseFlightsResult)
-        //         {
-        //             Console.WriteLine($"Codigo Empresa: {flight.Enterprise.Id}; Empresa: {flight.Enterprise.FullName};" +
-        //                             $"\nOrigem: {flight.Origin}; Destino: {flight.Destiny}" +  
-        //                             $"\nData: {flight.Date}; Saida: {flight.DepartureTime}; Chegada: {flight.ArrivalTime};" + 
-        //                             $"\nCodigo do Voo: {flight.Id}");
-        //         }
-        //     }
-        // }
-
          public void FlightFilter()
         {
             try
