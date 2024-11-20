@@ -111,10 +111,6 @@ namespace BuyTickets.Controllers
             return flight;
         }
 
-        /// <summary>
-        /// This method will remove the Flight class for the flight list. 
-        /// </summary>
-        /// <param name="idFlight">Will receive a Guid class which will represent the Flight ID attribute.</param>
         public bool Delete(Guid idFlight)
         {
             var resultSearchById = _flights.FirstOrDefault(f => f.Id == idFlight);
@@ -125,6 +121,24 @@ namespace BuyTickets.Controllers
 
             _flights.Remove(resultSearchById);
             return true;
+        }
+
+        public IEnumerable<Customer> CustomerList(Guid IdFlight)
+        {
+            var resultSearchById = _flights.FirstOrDefault(f => f.Id == IdFlight);
+            if (resultSearchById == null)
+            {
+                return null;
+            }
+            else
+            {
+                if (resultSearchById.registeredCustomers.Count() == 0)
+                {
+                    return null;
+                }
+
+                return resultSearchById.registeredCustomers;
+            }
         }
     }
 }
