@@ -96,6 +96,7 @@ namespace BuyTickets.views
         {
             bool exitAccount = false;
             bool backToMenu = false;
+            var customerOrEnterprise = new Tuple<Customer, Enterprise>(null, enterprise);
             while (exitAccount != true)
             {
                 Console.Clear();
@@ -115,7 +116,7 @@ namespace BuyTickets.views
                         break;
                     case "2":
                         Console.Clear();
-                        _flightControllerView.SearchByIdWithCustomers();
+                        _flightControllerView.SearchById(customerOrEnterprise);
                         Console.ReadKey();
                         break;
                     case "3":
