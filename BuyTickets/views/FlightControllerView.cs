@@ -64,7 +64,7 @@ namespace BuyTickets.views
                 var result = _flightController.Create(flight);
                 enterprise.Flights.Add(flight);
                 Console.WriteLine($"Voo {result.Id} cadastrado com sucesso!!!");
-                Console.ReadKey();
+                // Console.ReadKey();
             }
         }
 
@@ -88,7 +88,7 @@ namespace BuyTickets.views
             }
         }
 
-        public void SearchById()
+        public void SearchById(Tuple<Customer, Enterprise> customerOrEnterprise)
         {
             var flightInformed = "";
             try
@@ -108,8 +108,11 @@ namespace BuyTickets.views
 
                 var flightResult = _flightController.SearchById(flightId);
 
+                Console.Clear();
+                
                 if (flightResult == null)
                 {
+                    Console.Clear();
                     Console.WriteLine("Voo não encontrado...");
                 }
                 else
@@ -118,6 +121,23 @@ namespace BuyTickets.views
                                         $"Origem: {flightResult.Origin}; Destino: {flightResult.Destiny}" +
                                         $"\nData: {flightResult.Date}; Saida: {flightResult.DepartureTime}; Chegada: {flightResult.ArrivalTime};" + 
                                         $"\nCodigo do Voo: {flightResult.Id}\n");
+                    if (customerOrEnterprise.Item1 == null && customerOrEnterprise.Item2 != null)
+                    {
+                        
+                        Console.WriteLine("Deseja vizualizar os passeiros deste Voo([1]SIM/[2]NAO)");
+                        var optionUser = Console.ReadLine();
+                        switch(optionUser)
+                        {
+                            case "1":
+                                CustomerList(flightInformed);
+                                break;
+                            case "2":
+                                break;
+                            default:
+                                Console.WriteLine($"A opção [{optionUser}] não existe...");
+                                break;
+                        }
+                    }
                 }
             }
             catch (Exception)
@@ -187,7 +207,7 @@ namespace BuyTickets.views
             }   
         }
 
-         public void FlightFilter()
+        public void FlightFilter()
         {
             try
             {
@@ -406,6 +426,28 @@ namespace BuyTickets.views
                     Console.Clear();
                     Console.WriteLine("Erro: O valor do ID informado não corresponde ao padrão existente...");
                 }
+            }
+        }
+
+        public void CustomerList(string flightId)
+        {
+            var flightIdConverted = Guid.Parse(flightId);
+            var resultFlight = _flightController.SearchById(flightIdConverted);
+
+            if (resultFlight.registeredCustomers.Count() == 0)
+            {
+                Console.Clear();
+                Console.WriteLine("Não existem clientes cadastrados a esse voo...");
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("[");
+                foreach(var customer in resultFlight.registeredCustomers)
+                {
+                    Console.WriteLine($"    Nome: {customer.FullName}; Cpf: {customer.Cpf}; Email: {customer.Email};");
+                }
+                Console.WriteLine("]");
             }
         }
     }
