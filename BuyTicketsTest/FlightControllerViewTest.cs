@@ -245,5 +245,54 @@ namespace BuyTicketsTest
             }
         }
 
+        [Fact]
+        public void FlightFilter_ShouldReturnFlight_InformedAllParameters()
+        { 
+            //Arrange
+
+            var enterprise = _fixture.Enterprise;
+            var flightControllerView = _fixture.FlightControllerView;
+            string idFlight;
+
+            //Act
+
+            using (var input = new StringReader($"RIO BRANCO (AC)\nMACAPA (AP)\n30/12/2024"))
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de entrada de dados
+                Console.SetIn(input);
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                flightControllerView.FlightFilter();
+
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                var linesOutputResult = outputResult.Split('\n');
+
+                var lineWithIdFlight = linesOutputResult[5];
+
+                idFlight = lineWithIdFlight.Substring(15, 36);
+
+                StringBuilder resultFlightFilter = new StringBuilder();
+                for(int i = 3; i <= 5; i++)
+                {
+                    resultFlightFilter.Append(linesOutputResult[i]);
+                }
+
+                _output.WriteLine($"{resultFlightFilter.ToString()}");
+
+                // var flightListResult = new String[linesOutputResult.Length];
+                
+                // Array.Copy(linesOutputResult, 3, flightListResult, 3, linesOutputResult.Length);
+                
+                Assert.Equal($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.FullName};" +
+                                        $"Origem: RIO BRANCO (AC); Destino: MACAPA (AP)" +
+                                        $"Data: 30/12/2024 00:00:00; Saida: 30/12/2024 08:00:00; Chegada: 30/12/2024 10:00:00;" + 
+                                        $"Codigo do Voo: {idFlight}", resultFlightFilter.ToString());
+            }
+        }
+
     }
 }
