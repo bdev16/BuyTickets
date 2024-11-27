@@ -72,5 +72,40 @@ namespace BuyTicketsTest
             }
         }
 
+        [Fact]
+        public void SearchAll_ShouldReturnAllFlight_ThatRegistered()
+        {
+            // Arrange
+
+            var enterprise = _fixture.Enterprise;
+            var flightControllerView = _fixture.FlightControllerView;
+
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                flightControllerView.SearchAll();
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                var linesOutputResult = outputResult.Split('\n');
+
+                var lineToIdFlight = linesOutputResult[2];
+
+                var idFlight = lineToIdFlight.Substring(15, 36);
+
+                Assert.Equal($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.FullName};" +
+                                        $"Origem: RIO BRANCO (AC); Destino: MACAPA (AP)" +
+                                        $"\nData: 30/12/2024 00:00:00; Saida: 30/12/2024 08:00:00; Chegada: 30/12/2024 10:00:00;" + 
+                                        $"\nCodigo do Voo: {idFlight}\n{Environment.NewLine}", outputResult);
+            }
+            // _output.WriteLine($"Número de voos na lista: {_fixture.Flights.Count}");
+            // Assert.False(true, "Forçando falha para ver saída.");
+        }
+
     }
 }
