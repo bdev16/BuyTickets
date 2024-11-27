@@ -83,6 +83,12 @@ namespace BuyTickets.Controllers
                 return result;
             }
 
+            if (destiny != "" && date != null && origin != "")
+            {
+                result = _flights.Where(f => f.Destiny == destiny && f.Date == date && f.Origin == origin);
+                return result;
+            }
+
             if (origin == "" && destiny == "" && date == null)
             {
                 result = _flights;
