@@ -9,16 +9,23 @@ using System.Data.Common;
 
 namespace BuyTicketsTest
 {
-    public class FlightControllerTest
+    public class FlightControllerTest : IClassFixture<FlightControllerFixture>
     {
+
+        private readonly FlightControllerFixture _fixture;
+
+        public FlightControllerTest(FlightControllerFixture fixture)
+        {
+            _fixture = fixture;
+        }
+
         [Fact]
         public void Check_CreateMethod_Add_FlightObjectToList()
         {
             //Arrange
-            
-            List<Flight> flights = new List<Flight>();
-            FlightController flightController = new FlightController(flights);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
+        
+            FlightController flightController = _fixture.FlightController;
+            Enterprise enterprise = _fixture.Enterprise;
             Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
 
             //Act
@@ -37,14 +44,9 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            List<Flight> flights = new List<Flight>();
-            FlightController flightController = new FlightController(flights);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
-            Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
+            FlightController flightController = _fixture.FlightController;
 
             //Act
-
-            flightController.Create(flight);
 
             var flightResult = flightController.SearchAll();
             
@@ -58,20 +60,19 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-                List<Flight> flights = new List<Flight>();
-                FlightController flightController = new FlightController(flights);
-                Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
-                Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise); 
+            FlightController flightController = _fixture.FlightController;
+            Enterprise enterprise = _fixture.Enterprise;
+            Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
 
             //Act
 
-                flightController.Create(flight);
+            flightController.Create(flight);
 
-                var flightResult = flightController.SearchById(flight.Id);
+            var flightResult = flightController.SearchById(flight.Id);
 
             //Assert
 
-                Assert.Equal(flightResult, flight);
+            Assert.Equal(flightResult, flight);
         }
 
         [Fact]
@@ -79,15 +80,12 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            List<Flight> flights = new List<Flight>();
-            FlightController flightController = new FlightController(flights);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
-            Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
+            FlightController flightController = _fixture.FlightController;
+            Enterprise enterprise = _fixture.Enterprise;
             Flight flightCopy = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
+            var flight = _fixture.Flights[0];
 
             //Act
-
-            flightController.Create(flight);
 
             flight.Destiny = "RIO DE JANEIRO";
 
@@ -96,6 +94,7 @@ namespace BuyTicketsTest
             var flightResultAfterUpdate = flightController.SearchById(flight.Id);
 
             //Assert
+
             Assert.NotEqual(flightResultAfterUpdate.Destiny, flightCopy.Destiny);   
             Assert.Equal(flightResultAfterUpdate.Id, flight.Id);
         }
@@ -104,14 +103,12 @@ namespace BuyTicketsTest
         public void Check_MethodDelete_RemoveInformedFlightFromFlightList()
         {
             //Arrange
-            List<Flight> flights = new List<Flight>();
-            FlightController flightController = new FlightController(flights);
-            Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
-            Flight flight = new Flight("RECIFE", "SAO PAULO", "27/09/2024", "08:00", "10:00", enterprise);
+
+            FlightController flightController = _fixture.FlightController;
+            Enterprise enterprise = _fixture.Enterprise;
+            var flight = _fixture.Flights[0];
 
             //Act
-
-            flightController.Create(flight);
 
             var flightResult = flightController.SearchById(flight.Id);
 
