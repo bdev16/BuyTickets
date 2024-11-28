@@ -158,6 +158,7 @@ namespace BuyTicketsTest
 
                 // Obtendo a 6ª linha onde está o ID do voo
                 var dataToFlightInformed = linesToConsoleOutput[1];
+                _output.WriteLine($"{dataToFlightInformed}");
 
                 //Assert
 
@@ -347,6 +348,59 @@ namespace BuyTicketsTest
 
                 Assert.Equal($"Voo {idFlight} foi modificado com sucesso!!!\r", mensageSucessResult);
 
+            }
+        }
+
+        [Fact]
+        public void Delete_ShouldDeleteInformedFlight_And_ReturnSuccessPhrase()
+        {
+            //Arrange
+
+            var enterprise = _fixture.Enterprise;
+            var flightControllerView = _fixture.FlightControllerView;
+            string idFlight;
+
+            //Act
+
+            using (var output = new StringWriter())
+            {
+                // Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                flightControllerView.SearchAll();
+                
+                var outputResult = output.ToString();
+                // _output.WriteLine($"{outputResult}");
+
+                var linesOutputResult = outputResult.Split('\n');
+
+                var lineToIdFlight = linesOutputResult[2];
+
+                idFlight = lineToIdFlight.Substring(15, 36);
+                // output.WriteLine($"{idFlight}");
+
+                Assert.Equal($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.FullName};" +
+                                        $"Origem: RIO BRANCO (AC); Destino: MACAPA (AP)" +
+                                        $"\nData: 30/12/2024 00:00:00; Saida: 30/12/2024 08:00:00; Chegada: 30/12/2024 10:00:00;" + 
+                                        $"\nCodigo do Voo: {idFlight}\n{Environment.NewLine}", outputResult);
+            }
+
+            using (var input = new StringReader($"{idFlight}"))
+            using (var output = new StringWriter())
+            {
+
+                Console.SetIn(input);
+                Console.SetOut(output);
+
+                flightControllerView.Delete();
+
+                var outputResult = output.ToString();
+
+                var linesOutputResult = outputResult.Split('\n');
+
+                var resultSucessPhrase = linesOutputResult[1];
+
+                Assert.Equal($"Voo {idFlight} deletado com sucesso!!!\r", resultSucessPhrase);
             }
         }
     }
