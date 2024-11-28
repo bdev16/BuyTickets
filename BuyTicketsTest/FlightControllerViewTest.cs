@@ -14,7 +14,7 @@ using System.Text;
 
 namespace BuyTicketsTest
 {
-    public class FlightControllerViewTest
+    public class FlightControllerViewTest : IClassFixture<FlightControllerViewFixture>
     {  
         private readonly FlightControllerViewFixture _fixture;
         private readonly ITestOutputHelper _output;
