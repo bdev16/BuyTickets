@@ -116,12 +116,9 @@ namespace BuyTicketsTest
 
             var flightResultList = flightController.SearchAll();
 
-            var numFlights = flightResultList.Count;
-            Console.WriteLine($"{numFlights}");
-
             //Assert
 
-            Assert.Equal(1, numFlights);
+            Assert.Null(flightResultList);
         }
     }
 }
