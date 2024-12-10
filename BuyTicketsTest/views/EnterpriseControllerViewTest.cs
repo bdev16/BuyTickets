@@ -69,5 +69,31 @@ namespace BuyTicketsTest.views
                 // Assert.Equal(2, 5);
             }
         }
+
+        [Fact]
+        public void SearchAll_ShouldReturnAllFlight_ThatRegistered()
+        {
+            // Arrange
+
+            var enterpriseController = _fixture.EnterpriseController;
+            var enterpriseControllerView = _fixture.EnterpriseControllerView;
+
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                enterpriseControllerView.SearchAll();
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                var idEnterprise = outputResult.Substring(16, 36);
+
+                Assert.Equal($"Codigo Empresa: {idEnterprise}; Empresa: {_fixture.Enterprise.FullName};\n{Environment.NewLine}", outputResult);
+            }
+        }
     }
 }
