@@ -95,5 +95,52 @@ namespace BuyTicketsTest.views
                 Assert.Equal($"Codigo Empresa: {idEnterprise}; Empresa: {_fixture.Enterprise.FullName};\n{Environment.NewLine}", outputResult);
             }
         }
+
+        [Fact]
+        public void SearchById_ShouldReturnFlight_InformedByParameter()
+        {
+            //Arrange
+
+            var enterprise = _fixture.Enterprise;
+            var enterpriseController = _fixture.EnterpriseController;
+            var enterpriseControllerView = _fixture.EnterpriseControllerView;
+            
+            //Act
+
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                enterpriseControllerView.SearchAll();
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                var idEnterprise = outputResult.Substring(16, 36);
+
+                Assert.Equal($"Codigo Empresa: {idEnterprise}; Empresa: {_fixture.Enterprise.FullName};\n{Environment.NewLine}", outputResult);
+            }
+
+            using (var input = new StringReader($"{enterprise.Id}\n2"))
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de entrada de dados
+                Console.SetIn(input);
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                enterpriseControllerView.SearchById(enterprise);
+
+                var consoleOutputResult = output.ToString();
+
+                //Assert
+
+                // Validando que a empresa captura foi a informada
+                Assert.Equal($"Nome: {enterprise.FullName};\nEmail: {enterprise.Email};\nSenha: {enterprise.Password}{Environment.NewLine}", consoleOutputResult);
+            }
+        }
     }
 }
