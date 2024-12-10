@@ -25,8 +25,8 @@ namespace BuyTicketsTest.views
         {
             // Arrange
             
-            EnterpriseController enterpriseController = _fixture.EnterpriseController;
-            EnterpriseControllerView enterpriseControllerView = _fixture.EnterpriseControllerView;
+            var enterpriseController = _fixture.EnterpriseController;
+            var enterpriseControllerView = _fixture.EnterpriseControllerView;
 
             //Act
 
@@ -54,20 +54,19 @@ namespace BuyTicketsTest.views
                 var idEnterprise = linesForIdEnterprise.Substring(8, 36);
                 _output.WriteLine($"{idEnterprise}"); // GUID tem 36 caracteres no formato padrão.
 
-                // Buscando o voo pelo ID
+                // Buscando a empresa pelo ID
                 var resultCreateEnterprise = enterpriseController.SearchById(Guid.Parse(idEnterprise));
 
-                // //Excluindo o Voo criado
-                // EnterpriseController.Delete(Guid.Parse(idEnterprise));
+                // //Excluindo a empresa criada
+                enterpriseController.Delete(Guid.Parse(idEnterprise));
 
-                // //Verificando se o voo foi excluido
-                // var resultDeleteFlight = flightController.SearchById(Guid.Parse(idFlight));
+                // //Verificando se a empresa foi excluida
+                var resultDeleteEnterprise = enterpriseController.SearchById(Guid.Parse(idEnterprise));
 
-                // // Validando que o voo foi criado corretamente
-                // Assert.NotNull(resultCreateFlight);
-                Assert.Equal(2, 5);
-                // Assert.Equal(null, resultDeleteFlight);
-
+                // // Validando que a empresa foi criada corretamente
+                Assert.NotNull(resultCreateEnterprise);
+                Assert.Equal(null, resultDeleteEnterprise);
+                // Assert.Equal(2, 5);
             }
         }
     }
