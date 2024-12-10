@@ -118,6 +118,8 @@ namespace BuyTickets.views
             }
         }
 
+        // Esse método não está fazendo sentido, nunca vai conter uma empresa com id errado, pq esse método recebe a copia da instancia da empresa que já realizou o login no sistema
+        // Então esse método não faz sentido
         public void Update(Enterprise enterprise)
         {
             var enterpriseResult = _enterpriseController.SearchById(enterprise.Id);
@@ -131,7 +133,7 @@ namespace BuyTickets.views
                 //Caso o valor informado pelo usuario for vazio, o atributo em questão de empresa vai receber o valor atual dele sem altera-lo
                 //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
                 Console.WriteLine("Os dados informados vão modificar os dados existente de empresa...");
-                Console.ReadKey();
+                // Console.ReadKey();
                 Console.WriteLine("Informe o nome da empresa(ou deixe em branco para nulo): ");
                 var name = Console.ReadLine();
                 if (name == "")
