@@ -270,7 +270,7 @@ namespace BuyTicketsTest.views
                 Assert.Equal($"Codigo Empresa: {idEnterprise}; Empresa: {_fixture.Enterprise.FullName};\n{Environment.NewLine}", outputResult);
             }
 
-            using (var input = new StringReader($"a\n{idEnterprise}\nGOL\ngol.airlines@gmail.com\ngol123"))
+            using (var input = new StringReader($"{idEnterprise}\nGOL\ngol.airlines@gmail.com\ngol123"))
             using (var output = new StringWriter())
             {
 
@@ -286,6 +286,51 @@ namespace BuyTicketsTest.views
                 var mensageSucessResult = linesOutputResult[4];
 
                 Assert.Equal($"Empresa {idEnterprise} foi modificada com sucesso!!!\r", mensageSucessResult);
+            }
+        }
+
+        [Fact]
+        public void Update_ShouldReturnMessageFlightNotFound()
+        {
+
+            //Arrange
+
+            var enterprise = _fixture.Enterprise;
+            var enterpriseController = _fixture.EnterpriseController;
+            var enterpriseControllerView = _fixture.EnterpriseControllerView;
+            var enterpriseFalse = new Enterprise("Emirates", "emirates.airlines@gmail.com", "emirates123", "12345678000195");
+
+            //Act
+
+            using (var output = new StringWriter())
+            {
+                 //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                enterpriseControllerView.SearchAll();
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                var idEnterprise = outputResult.Substring(16, 36);
+
+                Assert.Equal($"Codigo Empresa: {idEnterprise}; Empresa: {_fixture.Enterprise.FullName};\n{Environment.NewLine}", outputResult);
+            }
+
+            using (var input = new StringReader($"d2c5f3e2-a5f9-4e87-9b22-b3f3d76458a1\nGOL\ngol.airlines@gmail.com\ngol123"))
+            using (var output = new StringWriter())
+            {
+
+                Console.SetIn(input);
+                Console.SetOut(output);
+
+                enterpriseControllerView.Update(enterpriseFalse);
+
+                var outputResult = output.ToString();
+
+                Assert.Equal($"A empresa informada não foi encontrada...{Environment.NewLine}", outputResult);
             }
         }
     }
