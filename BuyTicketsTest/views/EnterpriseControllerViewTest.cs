@@ -142,5 +142,32 @@ namespace BuyTicketsTest.views
                 Assert.Equal($"Nome: {enterprise.FullName};\nEmail: {enterprise.Email};\nSenha: {enterprise.Password}{Environment.NewLine}", consoleOutputResult);
             }
         }
+
+        [Fact]
+        public void SearchAllFlights_ShouldReturnMessageNoFlightsExist()
+        {
+            // Given
+
+            var enterprise = _fixture.Enterprise;
+            var enterpriseController = _fixture.EnterpriseController;
+            var enterpriseControllerView = _fixture.EnterpriseControllerView;
+
+            // When
+        
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                enterpriseControllerView.SearchAllFlights(enterprise);
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                Assert.Equal($"Nenhum voo foi adquirido até o momento...{Environment.NewLine}", outputResult);
+            }
+        }
     }
 }
