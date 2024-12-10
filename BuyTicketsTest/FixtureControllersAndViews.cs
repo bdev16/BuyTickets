@@ -51,9 +51,11 @@ namespace BuyTicketsTest
             Enterprises.Add(Enterprise);
 
             FlightController = new FlightController(Flights);
+            EnterpriseController = new EnterpriseController(Enterprises);
 
             var globalValidations = new GlobalValidations();
             FlightControllerView = new FlightControllerView(FlightController, globalValidations, Airports);
+            EnterpriseControllerView = new EnterpriseControllerView(EnterpriseController, globalValidations);
         }
 
         public void Dispose()
