@@ -239,5 +239,54 @@ namespace BuyTicketsTest.views
                 Assert.Equal(null, resultDeleteFlight);
             }
         }
+
+        [Fact]
+        public void Update_ShouldModifyEnterprisetInformed_And_ReturnSucessPhrase()
+        {
+
+            //Arrange
+
+            var enterprise = _fixture.Enterprise;
+            var enterpriseController = _fixture.EnterpriseController;
+            var enterpriseControllerView = _fixture.EnterpriseControllerView;
+            string idEnterprise;
+
+            //Act
+
+            using (var output = new StringWriter())
+            {
+                 //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                enterpriseControllerView.SearchAll();
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                idEnterprise = outputResult.Substring(16, 36);
+
+                Assert.Equal($"Codigo Empresa: {idEnterprise}; Empresa: {_fixture.Enterprise.FullName};\n{Environment.NewLine}", outputResult);
+            }
+
+            using (var input = new StringReader($"a\n{idEnterprise}\nGOL\ngol.airlines@gmail.com\ngol123"))
+            using (var output = new StringWriter())
+            {
+
+                Console.SetIn(input);
+                Console.SetOut(output);
+
+                enterpriseControllerView.Update(enterprise);
+
+                var outputResult = output.ToString();
+
+                var linesOutputResult = outputResult.Split('\n');
+
+                var mensageSucessResult = linesOutputResult[4];
+
+                Assert.Equal($"Empresa {idEnterprise} foi modificada com sucesso!!!\r", mensageSucessResult);
+            }
+        }
     }
 }
