@@ -169,5 +169,75 @@ namespace BuyTicketsTest.views
                 Assert.Equal($"Nenhum voo foi adquirido até o momento...{Environment.NewLine}", outputResult);
             }
         }
+
+        [Fact]
+        public void SearchAllFlights_ShouldReturnAllFlightsRegisteredToEnterprise()
+        {
+            // Given
+
+            var enterprise = _fixture.Enterprise;
+            var enterpriseController = _fixture.EnterpriseController;
+            var enterpriseControllerView = _fixture.EnterpriseControllerView;
+            var flightControllerView = _fixture.FlightControllerView;
+            var flightController = _fixture.FlightController;
+            Flight flightCreated;
+
+            // When
+        
+            using (var input = new StringReader("manaus\nbelem\n30/12/2024\n08:00\n10:00"))
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de entrada de dados
+                Console.SetIn(input);
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                flightControllerView.Create(enterprise);
+
+                // Assert
+                var consoleOutputResult = output.ToString();
+
+                // Dividindo saída em linhas
+                var linesToConsoleOutput = consoleOutputResult.Split(Environment.NewLine);
+
+                // Obtendo a 6ª linha onde está o ID do voo
+                var linesForIdFlight = linesToConsoleOutput[5];
+
+                // Extraindo o GUID
+                var idFlight = linesForIdFlight.Substring(4, 36); // GUID tem 36 caracteres no formato padrão.
+
+                // Buscando o voo pelo ID
+                flightCreated = flightController.SearchById(Guid.Parse(idFlight));
+
+                // Validando que o voo foi criado corretamente
+                Assert.NotNull(flightCreated);
+            }
+
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                enterpriseControllerView.SearchAllFlights(enterprise);
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                //Excluindo o Voo criado
+                flightController.Delete(flightCreated.Id);
+
+                //Verificando se o voo foi excluido
+                var resultDeleteFlight = flightController.SearchById(flightCreated.Id);
+
+                Assert.Equal($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.FullName};" +
+                                        $"Origem: {flightCreated.Origin}; Destino: {flightCreated.Destiny}" +
+                                        $"\nData: {flightCreated.Date}; Saida: {flightCreated.DepartureTime}; Chegada: {flightCreated.ArrivalTime};" + 
+                                        $"\nCodigo do Voo: {flightCreated.Id}\n{Environment.NewLine}", outputResult);
+                Assert.Equal(null, resultDeleteFlight);
+            }
+        }
     }
 }
