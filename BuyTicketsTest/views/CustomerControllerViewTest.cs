@@ -303,5 +303,38 @@ namespace BuyTicketsTest.views
                 Assert.Equal("O Voo informado não existe no sistema...", lineToMessage);
             }
         }
+
+        [Fact]
+        public void BuyFlight_ShouldReturnMessageToIdFlightToFormatIncorrect()
+        {
+            // Given
+
+            var customer = _fixture.Customer;
+            var customerControllerView = _fixture.CustomerControllerView;
+            string idFlight;
+
+            using (var input = new StringReader($"incorreto\nJoelinton\nSouza\n50460930420\nVaiDarErro"))
+            using (var output = new StringWriter())
+            {
+
+                //Muda o padrão de entrada de dados
+                Console.SetIn(input);
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                customerControllerView.BuyFlight(customer);
+
+                // Assert
+                var consoleOutputResult = output.ToString();
+
+                // Dividindo saída em linhas
+                var linesToConsoleOutput = consoleOutputResult.Split(Environment.NewLine);
+
+                // Obtendo a 6ª linha onde está o ID do voo
+                var lineToMessage = linesToConsoleOutput[1];
+
+                Assert.Equal("Erro: O valor passado não é um ID valido...", lineToMessage);
+            }
+        }
     }
 }
