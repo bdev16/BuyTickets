@@ -178,6 +178,8 @@ namespace BuyTickets.views
             }     
         }
 
+        // Esse método não está fazendo sentido, nunca vai conter uma empresa com id errado, pq esse método recebe a copia da instancia da empresa que já realizou o login no sistema
+        // Então esse método não faz sentido
         public void Delete(Enterprise enterprise)
         {
             var enterpriseResult = _enterpriseController.SearchById(enterprise.Id);
