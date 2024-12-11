@@ -442,5 +442,71 @@ namespace BuyTicketsTest.views
                 Assert.Equal($"Nome Completo: {customer.FullName};\nNome: {customer.FirstName};\nSobrenome: {customer.LastName};\nEmail: {customer.Email};\nSenha: {customer.Password}{Environment.NewLine}", consoleOutputResult);
             }
         }
+
+        [Fact]
+        public void Update_ShouldModifyCustomerInformed_And_ReturnSucessPhrase()
+        {
+
+            //Arrange
+            
+            var customerController = _fixture.CustomerController;
+            var customerControllerView = _fixture.CustomerControllerView;
+            string idCustomer;
+            Customer createdCustomer;
+
+            //Act
+
+            using (var input = new StringReader("Elielson\nJustiça\nelielson@gmail.com\n123\n53575915420"))
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de entrada de dados
+                Console.SetIn(input);
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+                
+                customerControllerView.Create();
+
+                // Assert
+                var consoleOutputResult = output.ToString();
+
+                // Dividindo saída em linhas
+                var linesToConsoleOutput = consoleOutputResult.Split(Environment.NewLine);
+
+                // Obtendo a 6ª linha onde está o ID do voo
+                var linesForIdCustomer = linesToConsoleOutput[5];
+
+                // Extraindo o GUID
+                idCustomer = linesForIdCustomer.Substring(8, 36); // GUID tem 36 caracteres no formato padrão.
+
+                // Buscando o usuario cliente pelo ID
+                createdCustomer = customerController.SearchById(Guid.Parse(idCustomer));
+
+                // // //Excluindo o usuario cliente criado
+                // customerController.Delete(Guid.Parse(idCustomer));
+
+                // // //Verificando se o usuario cliente foi excluido
+                // var resultDeleteCustomer = customerController.SearchById(Guid.Parse(idCustomer));
+
+                Assert.Equal($"Cliente {idCustomer} cadastrado com sucesso!!!", linesForIdCustomer);
+            }
+
+            using (var input = new StringReader($"{idCustomer}\nEdison\nElias\nedison@gmail.com\n1234"))
+            using (var output = new StringWriter())
+            {
+
+                Console.SetIn(input);
+                Console.SetOut(output);
+
+                customerControllerView.Update(createdCustomer);
+
+                var outputResult = output.ToString();
+
+                var linesOutputResult = outputResult.Split('\n');
+
+                var mensageSucessResult = linesOutputResult[5];
+
+                Assert.Equal($"Cliente {idCustomer} foi modificado com sucesso!!!\r", mensageSucessResult);
+            }
+        }
     }
 }
