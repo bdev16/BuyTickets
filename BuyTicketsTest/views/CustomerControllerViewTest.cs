@@ -210,5 +210,64 @@ namespace BuyTicketsTest.views
                 Assert.Equal("Compra cancelada com sucesso!!!", lineToMessage);
             }
         }
+
+        [Fact]
+        public void BuyFlight_ShouldReturnMessageOptionNonexistent()
+        {
+            // Given
+
+            var customer = _fixture.Customer;
+            var enterprise = _fixture.Enterprise;
+            var customerControllerView = _fixture.CustomerControllerView;
+            var flightControllerView = _fixture.FlightControllerView;
+            string idFlight;
+
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                flightControllerView.SearchAll();
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                var linesOutputResult = outputResult.Split('\n');
+
+                var lineToIdFlight = linesOutputResult[2];
+
+                idFlight = lineToIdFlight.Substring(15, 36);
+
+                Assert.Equal($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.FullName};" +
+                                        $"Origem: RIO BRANCO (AC); Destino: MACAPA (AP)" +
+                                        $"\nData: 30/12/2024 00:00:00; Saida: 30/12/2024 08:00:00; Chegada: 30/12/2024 10:00:00;" + 
+                                        $"\nCodigo do Voo: {idFlight}\n{Environment.NewLine}", outputResult);
+            }
+
+            using (var input = new StringReader($"{idFlight}\nJoelinton\nSouza\n50460930420\nVaiDarErro"))
+            using (var output = new StringWriter())
+            {
+
+                //Muda o padrão de entrada de dados
+                Console.SetIn(input);
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                customerControllerView.BuyFlight(customer);
+
+                // Assert
+                var consoleOutputResult = output.ToString();
+
+                // Dividindo saída em linhas
+                var linesToConsoleOutput = consoleOutputResult.Split(Environment.NewLine);
+
+                // Obtendo a 6ª linha onde está o ID do voo
+                var lineToMessage = linesToConsoleOutput[5];
+
+                Assert.Equal("O valor informado [VaiDarErro] não está entre as opções disponiveis...", lineToMessage);
+            }
+        }
     }
 }
