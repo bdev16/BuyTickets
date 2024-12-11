@@ -23,6 +23,7 @@ namespace BuyTicketsTest
         public CustomerControllerView CustomerControllerView{ get; private set; }
         public EnterpriseController EnterpriseController{ get; private set; }
         public EnterpriseControllerView EnterpriseControllerView{ get; private set; }
+        public MenuView MenuView { get; private set; }
 
         public FixtureControllersAndViews()
         {
@@ -50,12 +51,19 @@ namespace BuyTicketsTest
             Enterprises = new List<Enterprise>();
             Enterprises.Add(Enterprise);
 
+            Customers = new List<Customer>();
+            Customers.Add(Customer);
+
             FlightController = new FlightController(Flights);
             EnterpriseController = new EnterpriseController(Enterprises);
+            CustomerController = new CustomerController(Customers);
 
             var globalValidations = new GlobalValidations();
             FlightControllerView = new FlightControllerView(FlightController, globalValidations, Airports);
             EnterpriseControllerView = new EnterpriseControllerView(EnterpriseController, globalValidations);
+            CustomerControllerView = new CustomerControllerView(CustomerController, FlightController, globalValidations);
+
+            MenuView = new MenuView(FlightControllerView, EnterpriseControllerView, CustomerControllerView);
         }
 
         public void Dispose()
