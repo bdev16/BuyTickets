@@ -448,7 +448,7 @@ namespace BuyTicketsTest.views
         {
 
             //Arrange
-            
+
             var customerController = _fixture.CustomerController;
             var customerControllerView = _fixture.CustomerControllerView;
             string idCustomer;
@@ -505,7 +505,11 @@ namespace BuyTicketsTest.views
 
                 var mensageSucessResult = linesOutputResult[5];
 
+                //Excluindo o usuario cliente criado
+                var result = customerController.Delete(Guid.Parse(idCustomer));
+
                 Assert.Equal($"Cliente {idCustomer} foi modificado com sucesso!!!\r", mensageSucessResult);
+                Assert.Equal(true, result);
             }
         }
     }
