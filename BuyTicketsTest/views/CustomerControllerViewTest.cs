@@ -414,5 +414,33 @@ namespace BuyTicketsTest.views
                 Assert.Equal("Erro: O valor passado não é um ID valido...", lineToMessage);
             }
         }
+
+        [Fact]
+        public void SearchById_ShouldReturnMessageWithCustomerData()
+        {
+            //Arrange
+
+            var customer = _fixture.Customer;
+            var customerControllerView = _fixture.CustomerControllerView;
+            
+            //Act
+
+            using (var input = new StringReader($"{customer.Id}\n2"))
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de entrada de dados
+                Console.SetIn(input);
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                customerControllerView.SearchById(customer);
+
+                var consoleOutputResult = output.ToString();
+
+                //Assert
+
+                Assert.Equal($"Nome Completo: {customer.FullName};\nNome: {customer.FirstName};\nSobrenome: {customer.LastName};\nEmail: {customer.Email};\nSenha: {customer.Password}{Environment.NewLine}", consoleOutputResult);
+            }
+        }
     }
 }
