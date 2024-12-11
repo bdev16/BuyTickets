@@ -94,6 +94,84 @@ namespace BuyTicketsTest.views
         }
 
         [Fact]
+        public void SearchAllFlights_ShouldReturnAllFlightsAcquired()
+        {
+            // Given
+
+            var customer = _fixture.Customer;
+            var enterprise = _fixture.Enterprise;
+            var flight = _fixture.Flights[0];
+            var customerControllerView = _fixture.CustomerControllerView;
+            var flightControllerView = _fixture.FlightControllerView;
+            string idFlight;
+            
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                flightControllerView.SearchAll();
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                var linesOutputResult = outputResult.Split('\n');
+
+                var lineToIdFlight = linesOutputResult[2];
+
+                idFlight = lineToIdFlight.Substring(15, 36);
+
+                Assert.Equal($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.FullName};" +
+                                        $"Origem: RIO BRANCO (AC); Destino: MACAPA (AP)" +
+                                        $"\nData: 30/12/2024 00:00:00; Saida: 30/12/2024 08:00:00; Chegada: 30/12/2024 10:00:00;" + 
+                                        $"\nCodigo do Voo: {idFlight}\n{Environment.NewLine}", outputResult);
+            }
+
+            using (var input = new StringReader($"{idFlight}\nJoelinton\nSouza\n50460930420\n1"))
+            using (var output = new StringWriter())
+            {
+
+                //Muda o padrão de entrada de dados
+                Console.SetIn(input);
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                customerControllerView.BuyFlight(customer);
+
+                // Assert
+                var consoleOutputResult = output.ToString();
+
+                // Dividindo saída em linhas
+                var linesToConsoleOutput = consoleOutputResult.Split(Environment.NewLine);
+
+                // Obtendo a 6ª linha onde está o ID do voo
+                var lineToMessage = linesToConsoleOutput[5];
+
+                Assert.Equal("Compra efetuada com sucesso!!!", lineToMessage);
+            }
+
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                customerControllerView.SearchAllFlights(customer);
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                Assert.Equal($"Codigo Empresa: {enterprise.Id}; Empresa: {flight.Enterprise.FullName};" +
+                                        $"Origem: {flight.Origin}; Destino: {flight.Destiny}" +
+                                        $"\nData: {flight.Date}; Saida: {flight.DepartureTime}; Chegada: {flight.ArrivalTime};" + 
+                                        $"\nCodigo do Voo: {flight.Id}\n{Environment.NewLine}", outputResult);
+            }
+        }
+
+        [Fact]
         public void BuyFlight_ShouldReturnMessageSuccessBuy()
         {
             // Given
