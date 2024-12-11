@@ -29,6 +29,7 @@ namespace BuyTicketsTest
         {
             // Inicializando dados compartilhados entre os testes
             Enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
+            Customer = new Customer("emailvalido@gmail.com", "cliente123", "Bruno", "Antonio", "56097045080"); 
 
             // Flights = new List<Flight>();
 
@@ -41,11 +42,6 @@ namespace BuyTicketsTest
             {
                 new Airport("RIO BRANCO", "AC"), new Airport("MACAPA", "AP"),
                 new Airport("MANAUS", "AM"), new Airport("BELEM", "PA")
-            };
-
-            Customers = new List<Customer>()
-            {
-                new Customer("emailvalido@gmail.com", "cliente123", "Bruno", "Antonio", "56097045080")
             };
 
             Enterprises = new List<Enterprise>();
