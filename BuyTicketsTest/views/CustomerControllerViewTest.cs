@@ -512,5 +512,67 @@ namespace BuyTicketsTest.views
                 Assert.Equal(true, result);
             }
         }
+
+        [Fact]
+        public void Delete_ShouldDeleteInformedEnterprise_And_ReturnSuccessPhrase()
+        {
+            //Arrange
+
+            var customer = _fixture.Customer;
+            var customerController = _fixture.CustomerController;
+            var customerControllerView = _fixture.CustomerControllerView;
+            string idCustomer;
+            Customer createdCustomer;
+
+            //Act
+
+            using (var input = new StringReader("Elielson\nJustiça\nelielson@gmail.com\n123\n53575915420"))
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de entrada de dados
+                Console.SetIn(input);
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+                
+                customerControllerView.Create();
+
+                // Assert
+                var consoleOutputResult = output.ToString();
+
+                // Dividindo saída em linhas
+                var linesToConsoleOutput = consoleOutputResult.Split(Environment.NewLine);
+
+                // Obtendo a 6ª linha onde está o ID do voo
+                var linesForIdCustomer = linesToConsoleOutput[5];
+
+                // Extraindo o GUID
+                idCustomer = linesForIdCustomer.Substring(8, 36); // GUID tem 36 caracteres no formato padrão.
+
+                // Buscando o usuario cliente pelo ID
+                createdCustomer = customerController.SearchById(Guid.Parse(idCustomer));
+
+                // // //Excluindo o usuario cliente criado
+                // customerController.Delete(Guid.Parse(idCustomer));
+
+                // // //Verificando se o usuario cliente foi excluido
+                // var resultDeleteCustomer = customerController.SearchById(Guid.Parse(idCustomer));
+
+                Assert.Equal($"Cliente {idCustomer} cadastrado com sucesso!!!", linesForIdCustomer);
+            }
+
+            using (var input = new StringReader($"{idCustomer}"))
+            using (var output = new StringWriter())
+            {
+
+                Console.SetIn(input);
+                Console.SetOut(output);
+
+                customerControllerView.Delete(createdCustomer);
+
+                var outputResult = output.ToString();
+
+                Assert.Equal($"Empresa {idCustomer} deletada com sucesso!!!\r\n", outputResult);
+            }
+        }
     }
 }
