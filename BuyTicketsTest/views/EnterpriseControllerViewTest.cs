@@ -333,5 +333,53 @@ namespace BuyTicketsTest.views
                 Assert.Equal($"A empresa informada não foi encontrada...{Environment.NewLine}", outputResult);
             }
         }
+
+        [Fact]
+        public void Delete_ShouldDeleteInformedEnterprise_And_ReturnSuccessPhrase()
+        {
+            //Arrange
+
+            var enterprise = _fixture.Enterprise;
+            var enterpriseController = _fixture.EnterpriseController;
+            var enterpriseControllerView = _fixture.EnterpriseControllerView;
+            string idEnterprise;
+            Enterprise enterpriseCaptured;
+
+            //Act
+
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                enterpriseControllerView.SearchAll();
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                idEnterprise = outputResult.Substring(16, 36);
+
+                enterpriseCaptured = enterpriseController.SearchById(Guid.Parse(idEnterprise));
+
+                Assert.Equal($"Codigo Empresa: {enterprise.Id}; Empresa: {enterprise.FullName};\n{Environment.NewLine}", outputResult);
+                Assert.NotNull(enterpriseCaptured);
+            }
+
+            using (var input = new StringReader($"{enterpriseCaptured.Id}"))
+            using (var output = new StringWriter())
+            {
+
+                Console.SetIn(input);
+                Console.SetOut(output);
+
+                enterpriseControllerView.Delete(enterpriseCaptured);
+
+                var outputResult = output.ToString();
+
+                Assert.Equal($"Empresa {enterpriseCaptured.Id} deletada com sucesso!!!\r\n", outputResult);
+            }
+        }
     }
 }
