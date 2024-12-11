@@ -65,5 +65,32 @@ namespace BuyTicketsTest.views
                 Assert.Equal(null, resultDeleteCustomer);
             }
         }
+
+        [Fact]
+        public void SearchAllFlights_ShouldReturnMessageNoFlightsExist()
+        {
+            // Given
+
+            var customer = _fixture.Customer;
+            var customerController = _fixture.CustomerController;
+            var customerControllerView = _fixture.CustomerControllerView;
+
+            // When
+        
+            using (var output = new StringWriter())
+            {
+                //Muda o padrão de saida de dados
+                Console.SetOut(output);
+
+                // Act
+                customerControllerView.SearchAllFlights(customer);
+
+                // Assert
+                var outputResult = output.ToString();
+                _output.WriteLine($"{outputResult}");
+
+                Assert.Equal($"Nenhum voo foi adquirido até o momento...{Environment.NewLine}", outputResult);
+            }
+        }
     }
 }
