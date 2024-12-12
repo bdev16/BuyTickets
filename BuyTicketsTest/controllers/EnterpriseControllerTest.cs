@@ -39,6 +39,22 @@ namespace BuyTicketsTest
         }
 
         [Fact]
+        public void Check_CreateMethod_ReturnNullIfReceiveNullValue()
+        {
+            //Arrange
+        
+            var enterpriseController = _fixture.EnterpriseController;
+
+            //Act
+
+            var outputResult = enterpriseController.Create(null);
+
+            //Assert
+
+            Assert.Equal(null, outputResult);
+        }
+
+        [Fact]
         public void Check_SearchAllMethod_ReturnsAEnterpriseList()
         {
             //Arrange
