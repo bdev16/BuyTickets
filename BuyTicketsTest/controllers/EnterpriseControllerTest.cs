@@ -8,15 +8,23 @@ using Xunit;
 
 namespace BuyTicketsTest
 {
-    public class EnterpriseControllerTest
+    public class EnterpriseControllerTest : IClassFixture<FixtureControllersAndViews>
     {
+
+        private readonly FixtureControllersAndViews _fixture;
+
+        public EnterpriseControllerTest(FixtureControllersAndViews fixture)
+        {
+            _fixture = fixture;
+        }
+
+
         [Fact]
         public void Check_CreateMethod_Add_EnterpriseObjectToList()
         {
             //Arrange
             
-            List<Enterprise> enterprises = new List<Enterprise>();
-            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            var enterpriseController = _fixture.EnterpriseController;
             Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
 
             //Act
@@ -35,8 +43,7 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            List<Enterprise> enterprises = new List<Enterprise>();
-            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            var enterpriseController = _fixture.EnterpriseController;
             Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
 
             //Act
@@ -55,8 +62,7 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            List<Enterprise> enterprises = new List<Enterprise>();
-            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            var enterpriseController = _fixture.EnterpriseController;
             Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
             Enterprise enterprise1 = new Enterprise("GOL", "golairlines@gmail.com", "gol123", "30207900000790");
 
@@ -77,8 +83,7 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            List<Enterprise> enterprises = new List<Enterprise>();
-            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            var enterpriseController = _fixture.EnterpriseController;
             Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
             Enterprise enterpriseCopy = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
 
@@ -103,10 +108,8 @@ namespace BuyTicketsTest
         {
             //Arrange
 
-            List<Enterprise> enterprises = new List<Enterprise>();
-            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            var enterpriseController = _fixture.EnterpriseController;
             Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
-
 
             //Act
 
@@ -128,11 +131,9 @@ namespace BuyTicketsTest
         {
             // Arrange
 
-            List<Enterprise> enterprises = new List<Enterprise>();
-            EnterpriseController enterpriseController = new EnterpriseController(enterprises);
+            var enterpriseController = _fixture.EnterpriseController;
             Enterprise enterprise = new Enterprise("LATAM", "latamairlines@gmail.com", "latam123", "50405900000592");
 
-        
             // Act
 
             enterpriseController.Create(enterprise);
