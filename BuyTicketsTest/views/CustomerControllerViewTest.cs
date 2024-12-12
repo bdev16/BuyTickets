@@ -571,7 +571,7 @@ namespace BuyTicketsTest.views
 
                 var outputResult = output.ToString();
 
-                Assert.Equal($"Empresa {idCustomer} deletada com sucesso!!!\r\n", outputResult);
+                Assert.Equal($"Cliente {idCustomer} deletado com sucesso!!!\r\n", outputResult);
             }
         }
     }
