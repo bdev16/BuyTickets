@@ -40,6 +40,22 @@ namespace BuyTicketsTest
         }
 
         [Fact]
+        public void Check_CreateMethod_ReturnNullIfReceiveNullValue()
+        {
+            //Arrange
+        
+            FlightController flightController = _fixture.FlightController;
+
+            //Act
+
+            var outputResult = flightController.Create(null);
+
+            //Assert
+
+            Assert.Equal(null, outputResult);
+        }
+
+        [Fact]
         public void Check_SearchAllMethod_ReturnsAFlightList()
         {
             //Arrange
