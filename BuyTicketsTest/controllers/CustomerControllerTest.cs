@@ -7,15 +7,22 @@ using BuyTickets.Controllers;
 
 namespace BuyTicketsTest
 {
-    public class CustomerControllerTest
+    public class CustomerControllerTest : IClassFixture<FixtureControllersAndViews>
     {
+
+        private readonly FixtureControllersAndViews _fixture;
+
+        public CustomerControllerTest(FixtureControllersAndViews fixture)
+        {
+            _fixture = fixture;
+        }
+
         [Fact]
         public void Check_CreateMethod_Add_EnterpriseObjectToList()
         {
             //Arrange
             
-            List<Customer> customers = new List<Customer>();
-            CustomerController customerController = new CustomerController(customers);
+            var customerController = _fixture.CustomerController;
             Customer customer = new Customer("Bruno", "Antonio", "emailvalido@gmail.com", "bruno123", "89056091030");
 
             //Act
@@ -34,8 +41,7 @@ namespace BuyTicketsTest
         {
             // Arrange
 
-            List<Customer> customers = new List<Customer>();
-            CustomerController customerController = new CustomerController(customers);
+            var customerController = _fixture.CustomerController;
             Customer customer = new Customer("Bruno", "Antonio", "emailvalido@gmail.com", "bruno123", "89056091030");
             Customer customer2 = new Customer("Robson", "Silva", "emailvalido@gmail.com", "robson123", "65056041090");
 
@@ -56,8 +62,7 @@ namespace BuyTicketsTest
         {
             // Arrange
 
-            List<Customer> customers = new List<Customer>();
-            CustomerController customerController = new CustomerController(customers);
+            var customerController = _fixture.CustomerController;
             Customer customer = new Customer("Bruno", "Antonio", "emailvalido@gmail.com", "bruno123", "89056091030");
             Customer customerCopy = new Customer("Bruno", "Antonio", "emailvalido@gmail.com", "bruno123", "89056091030");
 
@@ -82,8 +87,7 @@ namespace BuyTicketsTest
         {
             // Arrange
 
-            List<Customer> customers = new List<Customer>();
-            CustomerController customerController = new CustomerController(customers);
+            var customerController = _fixture.CustomerController;
             Customer customer = new Customer("Bruno", "Antonio", "emailvalido@gmail.com", "bruno123", "89056091030");
 
             // Act
@@ -106,8 +110,7 @@ namespace BuyTicketsTest
         {
             // Arrange
 
-            List<Customer> customers = new List<Customer>();
-            CustomerController customerController = new CustomerController(customers);
+            var customerController = _fixture.CustomerController;
             Customer customer = new Customer("Bruno", "Antonio", "emailvalido@gmail.com", "bruno123", "89056091030");
         
             // Act
