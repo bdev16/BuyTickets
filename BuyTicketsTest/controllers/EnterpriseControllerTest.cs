@@ -160,6 +160,23 @@ namespace BuyTicketsTest
         }
 
         [Fact]
+        public void Check_MethodDelete_ReturnNullIfReceiveIdNonexistent()
+        {
+            //Arrange
+
+            var enterpriseController = _fixture.EnterpriseController;
+
+            //Act
+            Guid guid = Guid.Parse("d2c5f3e2-a5f9-4e87-9b22-b3f3d76458a1");
+
+            var resultDelete = enterpriseController.Delete(guid);
+
+            //Assert
+
+            Assert.Equal(false, resultDelete);
+        }
+
+        [Fact]
         public void Check_MethodLogin_ReturnsCustomerCaseLoginSuccess()
         {
             // Arrange
