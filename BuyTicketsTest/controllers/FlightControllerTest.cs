@@ -91,6 +91,24 @@ namespace BuyTicketsTest
             Assert.Equal(flightResult, flight);
         }
 
+        [Fact] 
+        public void Check_MethodSearchById_ReturnNullIfReceiveIdNonexistent()
+        {
+            //Arrange
+
+            FlightController flightController = _fixture.FlightController;
+            Enterprise enterprise = _fixture.Enterprise;
+
+            //Act
+
+            Guid guid = Guid.Parse("d2c5f3e2-a5f9-4e87-9b22-b3f3d76458a1");
+            var flightResult = flightController.SearchById(guid);
+
+            //Assert
+
+            Assert.Equal(null, flightResult);
+        }
+
         [Fact]
         public void Check_MethodUpdate_ModifieTheFlightRegisteredByTheFlightInformed()
         {
