@@ -154,5 +154,24 @@ namespace BuyTicketsTest
 
             Assert.Null(flightResultList);
         }
+
+        [Fact]
+        public void Check_MethodDelete_ReturnNullIfReceiveIdNonexistent()
+        {
+            //Arrange
+
+            FlightController flightController = _fixture.FlightController;
+            Enterprise enterprise = _fixture.Enterprise;
+            var flight = _fixture.Flights[0];
+
+            //Act
+            Guid guid = Guid.Parse("d2c5f3e2-a5f9-4e87-9b22-b3f3d76458a1");
+
+            var resultDelete = flightController.Delete(guid);
+
+            //Assert
+
+            Assert.Equal(false, resultDelete);
+        }
     }
 }
