@@ -171,23 +171,17 @@ namespace BuyTickets.views
         public void Delete(Customer customer)
         {
             var customerResult = _customerController.SearchById(customer.Id);
-            if (customerResult == null)
-            {
-                Console.WriteLine("O cliente informado não foi encontrado...");
-            }
-            else
+            try
             {
                 var resultDeleteCustomer = _customerController.Delete(customerResult.Id);
 
-                if (!resultDeleteCustomer)
-                {
-                    Console.WriteLine($"Ocorreu um erro ao tentar deletar o cliente informado...");
-                }
-                else
-                {
-                    Console.WriteLine($"Cliente {customerResult.Id} deletado com sucesso!!!");
-                }
+                Console.WriteLine($"Cliente {customerResult.Id} deletado com sucesso!!!");
+                
             }
+            catch (Exception)
+            {
+                Console.WriteLine($"Ocorreu um erro ao tentar deletar o cliente informado...");
+            } 
         }
 
         public void Login(MenuView menuView)
