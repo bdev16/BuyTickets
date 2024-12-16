@@ -123,12 +123,9 @@ namespace BuyTickets.views
         public void Update(Enterprise enterprise)
         {
             var enterpriseResult = _enterpriseController.SearchById(enterprise.Id);
-            if (enterpriseResult == null)
+            try
             {
-                Console.WriteLine("A empresa informada não foi encontrada...");
-            }
-            else
-            {
+
                 //O codigo abaixo, cria uma variavel de verificação que ao receber um valor qualquer do usuario
                 //Caso o valor informado pelo usuario for vazio, o atributo em questão de empresa vai receber o valor atual dele sem altera-lo
                 //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
@@ -167,15 +164,12 @@ namespace BuyTickets.views
                 
                 var enterpriseUpdateResult = _enterpriseController.Update(enterpriseResult);
 
-                if (enterpriseUpdateResult == null)
-                {
-                    Console.WriteLine("Ocorreu um erro ao tentar modificar os dados da empresa...");
-                }
-                else
-                {
-                    Console.WriteLine($"Empresa {enterpriseResult.Id} foi modificada com sucesso!!!");
-                }
-            }     
+                Console.WriteLine($"Empresa {enterpriseResult.Id} foi modificada com sucesso!!!");
+
+            }catch(Exception)
+            {
+                Console.WriteLine("Ocorreu um erro ao tentar modificar os dados do voo informado");
+            }         
         }
 
         // Esse método não está fazendo sentido, nunca vai conter uma empresa com id errado, pq esse método recebe a copia da instancia da empresa que já realizou o login no sistema
