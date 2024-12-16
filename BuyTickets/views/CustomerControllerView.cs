@@ -108,11 +108,7 @@ namespace BuyTickets.views
         public void Update(Customer customer)
         {
             var customerResult = _customerController.SearchById(customer.Id);
-            if (customerResult == null)
-            {
-                Console.WriteLine("O cliente informado não foi encontrado...");
-            }
-            else
+            try
             {
                 //O codigo abaixo, cria uma variavel de verificação que ao receber um valor qualquer do usuario
                 //Caso o valor informado pelo usuario for vazio, o atributo em questão de empresa vai receber o valor atual dele sem altera-lo
@@ -162,15 +158,14 @@ namespace BuyTickets.views
                 
                 var customerUpdateResult = _customerController.Update(customerResult);
 
-                if (customerUpdateResult == null)
-                {
-                    Console.WriteLine("Ocorreu um erro ao tentar modificar os dados de cliente...");
-                }
-                else
-                {
-                    Console.WriteLine($"Cliente {customerResult.Id} foi modificado com sucesso!!!");
-                }
-            }     
+                Console.WriteLine($"Cliente {customerResult.Id} foi modificado com sucesso!!!");
+                 
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Ocorreu um erro ao tentar modificar os dados de cliente...");
+            }
+               
         }
 
         public void Delete(Customer customer)
