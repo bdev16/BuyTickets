@@ -182,24 +182,18 @@ namespace BuyTickets.views
         // Então esse método não faz sentido
         public void Delete(Enterprise enterprise)
         {
-            var enterpriseResult = _enterpriseController.SearchById(enterprise.Id);
-            if (enterpriseResult == null)
+            try
             {
-                Console.WriteLine("Empresa não encontrada...");
-            }
-            else
-            {
+                var enterpriseResult = _enterpriseController.SearchById(enterprise.Id);
+            
                 var resultDeleteEnterprise = _enterpriseController.Delete(enterpriseResult.Id);
 
-                if (resultDeleteEnterprise == null)
-                {
-                    Console.WriteLine($"Ocorreu um erro ao tentar deletar o voo informado...");
-                }
-                else
-                {
-                    Console.WriteLine($"Empresa {enterpriseResult.Id} deletada com sucesso!!!");
-                }
-            }
+                Console.WriteLine($"Empresa {enterpriseResult.Id} deletada com sucesso!!!");
+
+            }catch(Exception)
+            {
+                Console.WriteLine("Ocorreu um erro ao tentar deletar o voo informado");
+            }   
         }
 
         public void Login(MenuView menuView)
