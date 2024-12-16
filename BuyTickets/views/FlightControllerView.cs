@@ -110,7 +110,7 @@ namespace BuyTickets.views
 
                 Console.Clear();
                 
-                if (flightResult == null)
+                if (flightResult == null || flightResult.Enterprise != customerOrEnterprise.Item2)
                 {
                     Console.Clear();
                     Console.WriteLine("Voo não encontrado...");
@@ -226,7 +226,7 @@ namespace BuyTickets.views
                 }
                 else
                 {
-
+                    
                     DateTime? dateConvert = null;
 
                     if (date != "")
