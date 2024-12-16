@@ -92,16 +92,15 @@ namespace BuyTickets.views
         }
 
         public void SearchById(Customer customer)
-        {
-            var customerResult = _customerController.SearchById(customer.Id);
-
-            if (customerResult == null)
-            {
-                Console.WriteLine("O cliente informado não foi encontrado...");
-            }
-            else
-            {
+        { 
+            try
+            {   
+                var customerResult = _customerController.SearchById(customer.Id);
                 Console.WriteLine($"Nome Completo: {customerResult.FullName};\nNome: {customerResult.FirstName};\nSobrenome: {customerResult.LastName};\nEmail: {customerResult.Email};\nSenha: {customerResult.Password}");
+            }
+            catch (System.Exception)
+            {
+                Console.WriteLine("Ocorreu um erro ao tentar encontrar o cliente...");
             }
         }
 
