@@ -106,9 +106,9 @@ namespace BuyTickets.views
 
         public void Update(Customer customer)
         {
-            var customerResult = _customerController.SearchById(customer.Id);
             try
             {
+                var customerResult = _customerController.SearchById(customer.Id);
                 //O codigo abaixo, cria uma variavel de verificação que ao receber um valor qualquer do usuario
                 //Caso o valor informado pelo usuario for vazio, o atributo em questão de empresa vai receber o valor atual dele sem altera-lo
                 //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
@@ -168,10 +168,11 @@ namespace BuyTickets.views
         }
 
         public void Delete(Customer customer)
-        {
-            var customerResult = _customerController.SearchById(customer.Id);
+        { 
             try
             {
+                var customerResult = _customerController.SearchById(customer.Id);
+
                 var resultDeleteCustomer = _customerController.Delete(customerResult.Id);
 
                 Console.WriteLine($"Cliente {customerResult.Id} deletado com sucesso!!!");
