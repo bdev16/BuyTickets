@@ -122,10 +122,9 @@ namespace BuyTickets.views
         // Então esse método não faz sentido
         public void Update(Enterprise enterprise)
         {
-            var enterpriseResult = _enterpriseController.SearchById(enterprise.Id);
             try
             {
-
+                var enterpriseResult = _enterpriseController.SearchById(enterprise.Id);
                 //O codigo abaixo, cria uma variavel de verificação que ao receber um valor qualquer do usuario
                 //Caso o valor informado pelo usuario for vazio, o atributo em questão de empresa vai receber o valor atual dele sem altera-lo
                 //Caso o valor informado por diferente de vazio, o atributo em questão vai receber o valor que foi informado pelo usuario, alterando o valor que estava anteriormente
