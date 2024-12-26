@@ -31,3 +31,6 @@ C:\Users\bruno.alexandrino\Documents\dev\BuyTickets\BuyTickets\obj\Debug\net8.0\
 C:\Users\bruno.alexandrino\Documents\dev\BuyTickets\BuyTickets\bin\Debug\net8.0\Flunt.dll
 C:\Users\bruno.alexandrino\Documents\dev\BuyTickets\BuyTickets\obj\Debug\net8.0\BuyTickets.csproj.AssemblyReference.cache
 C:\Users\bruno.alexandrino\Documents\dev\BuyTickets\BuyTickets\obj\Debug\net8.0\BuyTickets.csproj.CopyComplete
+C:\Users\Bruno\Documents\dev\Portifolio\BuyTickets\BuyTickets\bin\Debug\net8.0\Flunt.dll
+C:\Users\Bruno\Documents\dev\Portifolio\BuyTickets\BuyTickets\obj\Debug\net8.0\BuyTickets.csproj.AssemblyReference.cache
+C:\Users\Bruno\Documents\dev\Portifolio\BuyTickets\BuyTickets\obj\Debug\net8.0\BuyTickets.csproj.Up2Date

@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "K7beUZCKZtl586dV/O0unyMFT1w/8zC3ZB0qXo0puq0+d2TFuIqyEuRS9A3FkbQBR+4aKkp1ioEK9XQ8Bdfogw==",
+  "dgSpecHash": "qwuQ6dJYB4jH90vyrADXTjaPK32nRmsjgXkSH2VSooZzKzb5rHKd/1IvTAXGvYHr9eSgj/DD5WppdwZCPEfAyw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\bruno.alexandrino\\Documents\\dev\\BuyTickets\\BuyTickets\\BuyTickets.csproj",
+  "projectFilePath": "C:\\Users\\Bruno\\Documents\\dev\\Portifolio\\BuyTickets\\BuyTickets\\BuyTickets.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\bruno.alexandrino\\.nuget\\packages\\flunt\\2.0.5\\flunt.2.0.5.nupkg.sha512"
+    "C:\\Users\\Bruno\\.nuget\\packages\\flunt\\2.0.5\\flunt.2.0.5.nupkg.sha512"
   ],
   "logs": []
 }
